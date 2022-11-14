@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 23c064ca7362ff640a66e79d7b13593e
+guid: 26c3bb7bdf434e244b10977766596937
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -142,8 +142,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ebdd75979ad56af4880bf12311598957
-      internalID: -1983622434
+      spriteID: b3deb4b45d02ac8409388c73857683d4
+      internalID: 1323172562
       vertices: []
       indices: 
       edges: []
@@ -163,8 +163,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2e08d8c7a789acd49811a071c87fadab
-      internalID: -530476807
+      spriteID: 458eb9c1372c7d94ba6a91218353a374
+      internalID: 593071960
       vertices: []
       indices: 
       edges: []
@@ -180,8 +180,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      wooden_door_b_1: -530476807
-      wooden_door_b_0: -1983622434
+      wooden_door_b_1: 593071960
+      wooden_door_b_0: 1323172562
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

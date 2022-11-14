@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2cd1a14fbe71a9945b1c2bd169f7aedd
+guid: 3577886f91bf73048a837795bdc916e1
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -142,8 +142,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 058f8308d77b28e48b77b1afdb655915
-      internalID: 1760803776
+      spriteID: 45826ad9f3896714c8130636431ea950
+      internalID: -2038860509
       vertices: []
       indices: 
       edges: []
@@ -159,7 +159,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      grass_0: 1760803776
+      grass_0: -2038860509
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

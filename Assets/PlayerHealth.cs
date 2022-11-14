@@ -9,20 +9,23 @@ public class PlayerHealth : MonoBehaviour
     public Material WhiteMaterial;
     Material StandardMaterial;
     SpriteRenderer SpriteRenderer;
+    Animator Animator;
 
     public int MaxHealth;
 
-    int health;
+    int _health;
     public int Health
     {
-        get => health;
+        get => _health;
         set
         {
             if (value < 0) value = 0;
 
             if (value > MaxHealth) value = MaxHealth;
 
-            health = value;
+            _health = value;
+
+            if (_health == 0) Death();
         }
     }
 
@@ -32,13 +35,14 @@ public class PlayerHealth : MonoBehaviour
     {
         Singleton = this;
         SpriteRenderer = GetComponent<SpriteRenderer>();
+        Animator = GetComponent<Animator>();
         StandardMaterial = SpriteRenderer.material;
-        health = MaxHealth;
+        _health = MaxHealth;
     }
 
     public void Damage(int damage, float time = 0.2f)
     {
-        health -= damage;
+        Health -= damage;
 
         StartCoroutine(WhiteFlash(time));
     }
@@ -49,5 +53,11 @@ public class PlayerHealth : MonoBehaviour
         yield return new WaitForSeconds(time);
 
         SpriteRenderer.material = StandardMaterial;
+    }
+    public void Death()
+    {
+        if (Animator.GetBool("isDead")) return;
+
+        Animator.SetBool("isDead", true);
     }
 }

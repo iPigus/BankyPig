@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody2D Rigidbody;
     Animator Animator;
 
+    bool isAttacking { get; set; } = false;
+
     private void Awake()
     {
         Controls = new();
@@ -27,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Movement(Vector2 input)
     {
+        if (isAttacking) input = new();
+
         Animator.SetFloat("Movement", input.magnitude);
 
         CheckForCharacterFlip(input.x);
@@ -40,9 +44,14 @@ public class PlayerMovement : MonoBehaviour
     }
     void Attack()
     {
-        Animator.SetBool("isAttacking", true);
+        isAttacking = true;
+        Animator.SetBool("isAttacking", isAttacking);
     }
-    public void EndAttack() => Animator.SetBool("isAttacking", false);
+    public void EndAttack()
+    {
+        isAttacking = false;
+        Animator.SetBool("isAttacking", isAttacking);
+    }
 
 
     #region Inputs stuff

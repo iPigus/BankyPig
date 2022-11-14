@@ -31,6 +31,8 @@ AnimationClip:
       value: {fileID: -1805960012, guid: 42ee8eb6b3e2ef44894e9f920e53b012, type: 3}
     - time: 0.625
       value: {fileID: 0}
+    - time: 1
+      value: {fileID: 217936654, guid: 42ee8eb6b3e2ef44894e9f920e53b012, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -56,12 +58,13 @@ AnimationClip:
     - {fileID: 737352995, guid: 42ee8eb6b3e2ef44894e9f920e53b012, type: 3}
     - {fileID: -1805960012, guid: 42ee8eb6b3e2ef44894e9f920e53b012, type: 3}
     - {fileID: 0}
+    - {fileID: 217936654, guid: 42ee8eb6b3e2ef44894e9f920e53b012, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.75
+    m_StopTime: 1.125
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -82,7 +85,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.625
-    functionName: 
+    functionName: RemoveEnemy
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

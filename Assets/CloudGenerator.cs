@@ -41,9 +41,11 @@ public class CloudGenerator : MonoBehaviour
 
     void SpawnCloud(Vector2 position)
     {
-        Clouds.Add(Instantiate(Cloud, position, Quaternion.identity, transform));
+        GameObject spawnedCloud = Instantiate(Cloud, position, Quaternion.identity, transform);
 
-        StartCoroutine(DestroyCloud(Clouds[Clouds.Count - 1]));
+        Clouds.Add(spawnedCloud);
+        spawnedCloud.GetComponent<Rigidbody2D>().velocity = Random.Range(CloudMoveMinSpeed, CloudMoveMaxSpeed) * new Vector2(Mathf.Cos(CloudMoveDirection / 180f * Mathf.PI), Mathf.Sin(CloudMoveDirection / 180f * Mathf.PI));
+        StartCoroutine(DestroyCloud(spawnedCloud));
     }
 
     Vector2 FindPositionToSpawnCloud(bool canSpawnOnScreen = false)

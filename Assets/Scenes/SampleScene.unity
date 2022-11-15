@@ -458,6 +458,7 @@ GameObject:
   - component: {fileID: 575051125}
   - component: {fileID: 575051124}
   - component: {fileID: 575051126}
+  - component: {fileID: 575051127}
   m_Layer: 0
   m_Name: BlackHatGuy
   m_TagString: Untagged
@@ -546,6 +547,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OffsetY: 0
   isTileSet: 0
+--- !u!61 &575051127
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 575051123}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.21}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.6666667, y: 0.6666667}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 0.2}
+  m_EdgeRadius: 0
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -26525,7 +26552,10 @@ MonoBehaviour:
   Cloud: {fileID: 8665134954708309107, guid: f53b723152687ed4f88022436afffc03, type: 3}
   CloudFrequency: 1
   MaxCloudCount: 200
-  SpawnCloudCount: 50
+  SpawnCloudCount: 58
+  CloudMoveDirection: 300
+  CloudMoveMaxSpeed: 0.1
+  CloudMoveMinSpeed: 0.09
 --- !u!1 &1867170573
 GameObject:
   m_ObjectHideFlags: 0

@@ -45,3 +45,6 @@ TagManager:
   - name: Characters
     uniqueID: 1258244311
     locked: 0
+  - name: Clouds
+    uniqueID: 1556055333
+    locked: 0

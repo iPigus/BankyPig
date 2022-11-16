@@ -23,7 +23,7 @@ public class PlayerInteractions : MonoBehaviour
     }
     void InteractPerformed()
     {
-        if (!isInterationAvailable) return;
+        if (!isInterationAvailable || isInInteraction) return;
 
         InteractionSystem.Singleton.LoadInteraction(interactionToChose);
     }

@@ -10,6 +10,9 @@ public class InteractionSystem : MonoBehaviour
     [SerializeField] GameObject InteractionUI;
     [SerializeField] TextMeshProUGUI InteractionText;
 
+    [SerializeField] GameObject CharacterName; TextMeshProUGUI CharacterNameText => CharacterName.GetComponentInChildren<TextMeshProUGUI>();
+    [SerializeField] GameObject PlayerName;
+
     string TextToDisplay { get; set; } = "";
 
     [Range(0f, 0.1f)] public float timeToTypeCharacter = .05f;
@@ -19,6 +22,7 @@ public class InteractionSystem : MonoBehaviour
     private void Awake()
     {
         Singleton = this;
+        if (InteractionUI.activeSelf) InteractionUI.SetActive(false);
     }
 
     public void LoadInteraction(Interaction interaction)
@@ -38,9 +42,17 @@ public class InteractionSystem : MonoBehaviour
     IEnumerator DisplayText(string text, bool isTextPlayer)
     {
         TextToDisplay = "";
+
+        string textToDisplay = "";
+
         for (int i = 0; i < text.Length; i++)
         {
-            TextToDisplay.Insert(i, text[i].ToString());
+            textToDisplay += text[i];
+
+            TextToDisplay = textToDisplay;
+
+            if (i != text.Length - 1) TextToDisplay += "_";
+
             yield return new WaitForSeconds(timeToTypeCharacter);
         }   
     }

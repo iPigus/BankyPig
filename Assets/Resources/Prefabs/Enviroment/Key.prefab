@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2683941442932428498}
   - component: {fileID: 2683941442932428496}
   - component: {fileID: 1160375788}
+  - component: {fileID: 1931875974035485404}
   m_Layer: 0
   m_Name: Key
   m_TagString: Untagged
@@ -116,3 +117,15 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.25
+--- !u!114 &1931875974035485404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2683941442932428499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86a66c33d636c084b9aabfc728e722cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

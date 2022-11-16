@@ -56,7 +56,7 @@ public class CloudGenerator : MonoBehaviour
         {
             for (int i = 0; i < 1000; i++)
             {
-                value = GetRandomFloat(-30f, 30f);
+                value = GetRandomFloat(-35f, 35f);
 
                 if (isFarEnoughFromOtherClouds(value)) break;
             }
@@ -65,7 +65,7 @@ public class CloudGenerator : MonoBehaviour
         {
             for (int i = 0; i < 1000; i++)
             {
-                value = GetRandomFloat(-30f, 30f);
+                value = GetRandomFloat(-35f, 35f);
 
                 if (isFarEnoughFromOtherClouds(value) && !isCloudOnScreen(value)) break;
             }

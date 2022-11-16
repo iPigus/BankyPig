@@ -917,8 +917,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionTexts:
-  - Hey what are you looking for?
-  isPlayerText: 01
+  - What are you looking for in here?
+  - ???
+  - Who you are?
+  - Me.
+  - Okay...
+  - Anyway you wanna help me find a key to this house?
+  - Sure.
+  - I think it maybe somewhere in this forest, but Idk tbh
+  isPlayerText: 0001000100000100
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0

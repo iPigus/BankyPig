@@ -83,7 +83,11 @@ public class InteractionSystem : MonoBehaviour
     void LoadNextMessage(bool skipTyping = false) => LoadMessage(activeInteractionIndex + 1, activeInteraction, skipTyping);
     void LoadMessage(int index, Interaction interaction, bool skipTyping = false)
     {
-        if (interaction.texts.Count - 1 <= index) QuitInteraction(); 
+        if (interaction.texts.Count <= index)
+        {
+            QuitInteraction();
+            return;
+        }
 
         activeInteractionIndex = index;
 

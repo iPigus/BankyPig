@@ -71,6 +71,15 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ShowInventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""15bb7fb9-74eb-4c9b-9398-ce9ca767fdd6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -293,6 +302,28 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""action"": ""Escape"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b202b7db-d282-43f6-9ba5-8fff896c833e"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShowInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""16d3aaa1-b506-4e0a-9379-bb8ce22dd826"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShowInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -306,6 +337,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Confirm = m_Player.FindAction("Confirm", throwIfNotFound: true);
         m_Player_Escape = m_Player.FindAction("Escape", throwIfNotFound: true);
+        m_Player_ShowInventory = m_Player.FindAction("ShowInventory", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -370,6 +402,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Confirm;
     private readonly InputAction m_Player_Escape;
+    private readonly InputAction m_Player_ShowInventory;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -379,6 +412,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @Confirm => m_Wrapper.m_Player_Confirm;
         public InputAction @Escape => m_Wrapper.m_Player_Escape;
+        public InputAction @ShowInventory => m_Wrapper.m_Player_ShowInventory;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -403,6 +437,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Escape.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEscape;
                 @Escape.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEscape;
                 @Escape.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEscape;
+                @ShowInventory.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShowInventory;
+                @ShowInventory.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShowInventory;
+                @ShowInventory.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShowInventory;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -422,6 +459,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Escape.started += instance.OnEscape;
                 @Escape.performed += instance.OnEscape;
                 @Escape.canceled += instance.OnEscape;
+                @ShowInventory.started += instance.OnShowInventory;
+                @ShowInventory.performed += instance.OnShowInventory;
+                @ShowInventory.canceled += instance.OnShowInventory;
             }
         }
     }
@@ -433,5 +473,6 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnConfirm(InputAction.CallbackContext context);
         void OnEscape(InputAction.CallbackContext context);
+        void OnShowInventory(InputAction.CallbackContext context);
     }
 }

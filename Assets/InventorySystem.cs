@@ -40,9 +40,14 @@ public class InventorySystem : MonoBehaviour
         Singleton = this;
     }
 
-    public void OpenInventory()
+    private void Start()
     {
         LoadInventory();
+        SetItemsAcive(true);
+    }
+
+    public void OpenInventory()
+    {
         SetItemsAcive(true);
 
         InventoryUI.SetActive(true);
@@ -72,7 +77,7 @@ public class InventorySystem : MonoBehaviour
     {
         GameObject newItem = Instantiate(basicItem, ItemListParent.transform);  
         
-        newItem.AddComponent<ItemStats>().SetItemStats(item.Sprite, item.Name,item.Describtion, item.Id);
+        newItem.AddComponent<ItemStats>().SetItemStats(item.Sprite, item.Name,item.Describtion, item.Id, item.IsEquippable);
 
         newItem.GetComponent<RectTransform>().anchoredPosition = new(itemCount * 480, 0);
         
@@ -143,6 +148,10 @@ public class InventorySystem : MonoBehaviour
                 items[i].GetComponent<RectTransform>().localScale = Vector2.one * (i == activeItem ? 1f : .6f);
             }
         }
+
+        NameText.text = PlayerInventory.Singleton.Items[activeItem].Name;
+        DescribtionText.text = PlayerInventory.Singleton.Items[activeItem].Describtion;
+        EquitableObject.SetActive(PlayerInventory.Singleton.Items[activeItem].IsEquippable);
     }
 
     bool isMoving => MovingCoroutine != null || ScaleCoroutine != null;

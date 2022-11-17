@@ -50,3 +50,4 @@ MonoBehaviour:
   - Sword
   itemDescribtions:
   - Basic Sword
+  isItemEquippable: 01

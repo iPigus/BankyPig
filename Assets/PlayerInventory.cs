@@ -77,17 +77,19 @@ public class PlayerInventory : MonoBehaviour
 
 public class Item
 {
-    public Item(Sprite sprite, string name, string describtion, int id)
+    public Item(Sprite sprite, string name, string describtion, int id, bool isEquippable)
     {
         Sprite = sprite;
         Name = name;
         Describtion = describtion;
         Id = id;
+        IsEquippable = isEquippable;
     }
     public int Id { get; private set; }
     public string Name { get; private set; }
     public string Describtion { get; private set; }
     public Sprite Sprite { get; private set; }
+    public bool IsEquippable { get; private set;}
 
 }
 public static class AllItems
@@ -105,7 +107,7 @@ public static class AllItems
     {
         for (int i = 0; i < ItemData.ItemSprites.Count; i++)
         {
-            ItemList.Add(ItemList.Count, new(ItemData.ItemSprites[i], ItemData.ItemNames[i], ItemData.ItemDescribtions[i], ItemList.Count));
+            ItemList.Add(ItemList.Count, new(ItemData.ItemSprites[i], ItemData.ItemNames[i], ItemData.ItemDescribtions[i], ItemList.Count, ItemData.IsItemEquippable[i]));
         }
     }
 }

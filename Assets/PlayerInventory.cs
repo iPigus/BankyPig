@@ -21,9 +21,17 @@ public class PlayerInventory : MonoBehaviour
 
         controls.Player.ShowInventory.performed += ctx => OpenInventory();
         controls.Player.ShowInventory.canceled += ctx => CloseInventory();
+
+        controls.Player.Movement.performed += ctx => MoveInInventory(ctx.ReadValue<Vector2>().x);
     }
 
     float timeScaleBeforeOpening;
+
+
+    void MoveInInventory(float x)
+    {
+        if (isInventoryOpen) InventorySystem.Singleton.MovementInInventory(x);
+    }
 
     void OpenInventory()
     {
@@ -51,6 +59,7 @@ public class PlayerInventory : MonoBehaviour
     {
         Items = new();
 
+        Items.Add(AllItems.GetItemFromId(0));
         Items.Add(AllItems.GetItemFromId(0));
     }
 

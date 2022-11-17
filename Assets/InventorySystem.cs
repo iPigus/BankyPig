@@ -18,23 +18,37 @@ public class InventorySystem : MonoBehaviour
     
     List<GameObject> items = new();
 
+    public bool isInventoryOpen => InventoryUI.activeSelf;
+
     private void Awake()
     {
         Singleton = this;
-
-        for (int i = 0; i < PlayerInventory.Singleton.Items.Count; i++)
-        {
-            AddItem(PlayerInventory.Singleton.Items[i]);
-        }
     }
 
     public void OpenInventory()
     {
+        LoadInventory();
+
         InventoryUI.SetActive(true);
     }
     public void CloseInventory()
     {
         InventoryUI.SetActive(false);
+    }
+
+    void LoadInventory()
+    {
+        items = new();
+
+        for (int i = 0; i < ItemListParent.transform.childCount; i++)
+        {
+            Destroy(ItemListParent.transform.GetChild(i).gameObject);
+        }
+
+        for (int i = 0; i < PlayerInventory.Singleton.Items.Count; i++)
+        {
+            AddItem(PlayerInventory.Singleton.Items[i]);
+        }
     }
 
     public void AddItem(Item item)

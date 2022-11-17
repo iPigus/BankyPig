@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public static PlayerMovement Singleton { get; private set; }
+
     public float MovementSpeed = 1.0f;
 
     public Controls Controls { get; private set; }
@@ -11,10 +13,11 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody2D Rigidbody;
     Animator Animator;
 
-    bool isAttacking { get; set; } = false;
+    public bool isAttacking { get; private set; } = false;
 
     private void Awake()
     {
+        Singleton = this;
         Controls = new();
         Rigidbody = GetComponent<Rigidbody2D>();
         Animator = GetComponent<Animator>();
@@ -29,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Movement(Vector2 input)
     {
-        if (isAttacking) input = new();
+        if (isAttacking || PlayerInventory.Singleton.isInventoryOpen || PlayerInteractions.Singleton.isInInteraction) input = new();
 
         Animator.SetFloat("Movement", input.magnitude);
 
@@ -44,6 +47,8 @@ public class PlayerMovement : MonoBehaviour
     }
     void Attack()
     {
+        if (PlayerInventory.Singleton.isInventoryOpen || PlayerInteractions.Singleton.isInInteraction) return;
+
         isAttacking = true;
         Animator.SetBool("isAttacking", isAttacking);
     }

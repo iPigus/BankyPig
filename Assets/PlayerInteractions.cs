@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerInteractions : MonoBehaviour
 {
+    public static PlayerInteractions Singleton { get; private set; }
+
     public bool isPlayerInteractable = true;
     public bool isInterationAvailable => interactionToChose;
     public bool isInInteraction => InteractionSystem.Singleton.isInteractionActive;
@@ -13,6 +15,7 @@ public class PlayerInteractions : MonoBehaviour
 
     private void Awake()
     {
+        Singleton = this;
         Controls = new();
 
         Controls.Player.Interact.performed += ctx => InteractPerformed();
@@ -23,7 +26,7 @@ public class PlayerInteractions : MonoBehaviour
     }
     void InteractPerformed()
     {
-        if (!isInterationAvailable || isInInteraction) return;
+        if (!isInterationAvailable || isInInteraction || PlayerInventory.Singleton.isInventoryOpen || PlayerMovement.Singleton.isAttacking) return;
 
         InteractionSystem.Singleton.LoadInteraction(interactionToChose);
     }

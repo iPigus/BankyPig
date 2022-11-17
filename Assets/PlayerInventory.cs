@@ -8,25 +8,42 @@ public class PlayerInventory : MonoBehaviour
 
     public List<Item> Items = new();
 
+    public bool isInventoryOpen => InventorySystem.Singleton.isInventoryOpen;
+
     Controls controls;
 
     private void Awake()
     {
         Singleton = this;
+        controls = new();
 
         LoadInventory();
 
         controls.Player.ShowInventory.performed += ctx => OpenInventory();
         controls.Player.ShowInventory.canceled += ctx => CloseInventory();
-    }              
+    }
+
+    float timeScaleBeforeOpening;
 
     void OpenInventory()
     {
+        if (PlayerMovement.Singleton.isAttacking) return;
+
         InventorySystem.Singleton.OpenInventory();
+
+        timeScaleBeforeOpening = Time.timeScale;
+
+        Time.timeScale /= 5f;
     }
     void CloseInventory()
     {
+        if (!isInventoryOpen) return;
+
         InventorySystem.Singleton.CloseInventory();
+
+        Time.timeScale = timeScaleBeforeOpening;
+        
+        timeScaleBeforeOpening = 0;
     }
 
 

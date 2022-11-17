@@ -102,12 +102,30 @@ public class InventorySystem : MonoBehaviour
 
     public void MovementInInventory(float inputX)
     {
+        if (isMoving)
+        {
+            if(Waiting != null) StopCoroutine(Waiting);
+
+            Waiting = StartCoroutine(WaitToMove(inputX)); return;
+        }
+
         if ((inputX < -.3f && activeItem == 0) || (inputX > .3f && activeItem + 1 >= itemCount)) return; 
 
         if (inputX > .3f)
             activeItem++;
         else if (inputX < -.3f)
             activeItem--;
+    }
+
+    Coroutine Waiting = null;
+    IEnumerator WaitToMove(float inputX)
+    {
+        while (isMoving)
+        {
+            yield return new WaitForSecondsRealtime(.01f);
+        }
+
+        MovementInInventory(inputX); yield break;
     }
 
     void SetItemsAcive(bool moveInstantly = false)
@@ -126,6 +144,8 @@ public class InventorySystem : MonoBehaviour
             }
         }
     }
+
+    bool isMoving => MovingCoroutine != null || ScaleCoroutine != null;
 
     Coroutine MovingCoroutine = null;
     Coroutine ScaleCoroutine = null;

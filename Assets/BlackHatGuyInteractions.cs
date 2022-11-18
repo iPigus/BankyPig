@@ -13,7 +13,7 @@ public class BlackHatGuyInteractions : InteractionsList
 
     List<string> interactionTexts1 = new(){ "Oh you have found this key, nice", "Can you show me it to me a while?", "???", "Bro I wanna open these door...", "...And?", "And I'll let you in if it works", "Fine then..."
     };
-    List<bool> isPlayerText1 = new List<bool>() { false, true, false, true, false, true, false };
+    List<bool> isPlayerText1 = new List<bool>() { false, false, true, false, true, false, true };
 
     private void Awake()
     {

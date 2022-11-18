@@ -74,8 +74,8 @@ public class Interaction
             if (Texts.Count < IsTextPlayer.Count) Debug.LogError("Not enough Texts assigned! Difference: " + (IsTextPlayer.Count - Texts.Count));
         }
 
-        texts = Texts;
-        isTextPlayer = IsTextPlayer;
+        this.texts = Texts;
+        this.isTextPlayer = IsTextPlayer;
     }
 
     public static implicit operator bool(Interaction exists)

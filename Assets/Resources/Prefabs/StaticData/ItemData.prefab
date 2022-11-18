@@ -46,8 +46,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemSprites:
   - {fileID: 21300000, guid: 83b8f797a25a83b4498d4b34e6902304, type: 3}
+  - {fileID: 1898918044, guid: 7f7800ce8f4a4264a8e6af76af7cd629, type: 3}
   itemNames:
   - Sword
+  - Key
   itemDescribtions:
   - Basic Sword
-  isItemEquippable: 01
+  - Some key
+  isItemEquippable: 0100

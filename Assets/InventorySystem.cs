@@ -44,6 +44,7 @@ public class InventorySystem : MonoBehaviour
     {
         LoadInventory();
         SetItemsAcive(true);
+        CloseInventory();
     }
 
     public void OpenInventory()

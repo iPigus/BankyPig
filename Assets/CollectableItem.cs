@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class CollectableItem : MonoBehaviour
 {
+    [SerializeField] int ItemId;
+
     Collider2D Collider;
 
     private void Awake()
@@ -13,11 +15,20 @@ public class CollectableItem : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if (!collision.CompareTag("Player")) return;
+
+        if (PlayerInventory.Singleton.doesInventoryContainItem(ItemId)) return;
+
+        PlayerInventory.Singleton.AddItemToInventory(ItemId);
+        NewItemSystem.Singleton.ShowNewItem(ItemId);
+
+        Destroy(gameObject);
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (!collision.CompareTag("Player")) return;  
         
+
     }
 
     #region Checking 

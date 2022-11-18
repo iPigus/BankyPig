@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
@@ -61,6 +62,10 @@ public class PlayerInventory : MonoBehaviour
 
         Items.Add(AllItems.GetItemFromId(0));
     }
+
+    public void AddItemToInventory(int itemId) => Items.Add(AllItems.GetItemFromId(itemId));
+
+    public bool doesInventoryContainItem(int itemId) => Items.Contains(AllItems.GetItemFromId(itemId));
 
     #region Input Stuff
     private void OnEnable()

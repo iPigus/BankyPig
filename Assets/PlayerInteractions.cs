@@ -8,7 +8,7 @@ public class PlayerInteractions : MonoBehaviour
 
     public bool isPlayerInteractable = true;
     public bool isInterationAvailable => interactionToChose;
-    public bool isInInteraction => InteractionSystem.Singleton.isInteractionActive;
+    public static bool isInInteraction => InteractionSystem.Singleton.isInteractionActive;
     public Interaction interactionToChose { get; set; } 
 
     public Controls Controls { get; set; }
@@ -26,7 +26,7 @@ public class PlayerInteractions : MonoBehaviour
     }
     void InteractPerformed()
     {
-        if (!isInterationAvailable || isInInteraction || PlayerInventory.Singleton.isInventoryOpen || PlayerMovement.Singleton.isAttacking) return;
+        if (!isInterationAvailable || isInInteraction || PlayerInventory.isInventoryOpen || PlayerMovement.Singleton.isAttacking || NewItemSystem.isNewItemSystemActive) return;
 
         InteractionSystem.Singleton.LoadInteraction(interactionToChose);
     }

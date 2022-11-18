@@ -9,7 +9,7 @@ public class PlayerInventory : MonoBehaviour
 
     public List<Item> Items = new();
 
-    public bool isInventoryOpen => InventorySystem.Singleton.isInventoryOpen;
+    public static bool isInventoryOpen => InventorySystem.Singleton.isInventoryOpen;
 
     Controls controls;
 
@@ -36,7 +36,7 @@ public class PlayerInventory : MonoBehaviour
 
     void OpenInventory()
     {
-        if (PlayerMovement.Singleton.isAttacking) return;
+        if (PlayerMovement.Singleton.isAttacking || NewItemSystem.isNewItemSystemActive) return;
 
         InventorySystem.Singleton.OpenInventory();
 

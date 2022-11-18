@@ -27901,6 +27901,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: InventorySystem
       objectReference: {fileID: 0}
+    - target: {fileID: 2362633628016529326, guid: a66acc3080ff6de4ca223612f9ce3b8d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a66acc3080ff6de4ca223612f9ce3b8d, type: 3}
 --- !u!1001 &1821854661346985815
@@ -28544,7 +28548,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7253501506529455182, guid: 3dc6a7a442d753042a4161766a3d412f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8070672462782033968, guid: 3dc6a7a442d753042a4161766a3d412f, type: 3}
       propertyPath: m_Name

@@ -41,7 +41,7 @@ public class InteractableTrigger : MonoBehaviour
 
         if (collision.TryGetComponent(out PlayerInteractions playerInteractions))
         {
-            if(playerInteractions.interactionToChose == interaction && !playerInteractions.isInInteraction) playerInteractions.interactionToChose = null;
+            if(playerInteractions.interactionToChose == interaction && !PlayerInteractions.isInInteraction) playerInteractions.interactionToChose = null;
         }
         else
         {

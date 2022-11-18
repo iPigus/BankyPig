@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEditorInternal.Profiling.Memory.Experimental;
+using UnityEngine.UI;
 
 public class InventorySystem : MonoBehaviour
 {
@@ -49,6 +50,8 @@ public class InventorySystem : MonoBehaviour
 
     public void OpenInventory()
     {
+        LoadInventory();
+
         SetItemsAcive(true);
 
         InventoryUI.SetActive(true);
@@ -81,7 +84,9 @@ public class InventorySystem : MonoBehaviour
         newItem.AddComponent<ItemStats>().SetItemStats(item.Sprite, item.Name,item.Describtion, item.Id, item.IsEquippable);
 
         newItem.GetComponent<RectTransform>().anchoredPosition = new(itemCount * 480, 0);
-        
+
+        newItem.transform.GetChild(1).GetComponent<Image>().sprite = item.Sprite;
+
         items.Add(newItem);
     }
 

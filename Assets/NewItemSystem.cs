@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class NewItemSystem : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public static NewItemSystem Singleton { get; private set; }
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField] GameObject NewItemUI;
+
+    
+
+    public bool isNewItemSystemActive => NewItemUI.activeSelf;
+
+    private void Awake()
     {
-        
+        Singleton = this;
     }
 }

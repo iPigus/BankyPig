@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class InteractableTrigger : MonoBehaviour
 {
-    [SerializeField] List<string> interactionTexts = new List<string>();
-    [SerializeField] List<bool> isPlayerText = new List<bool>();
+    List<Interaction> interactions = new();
 
     Interaction interaction { get; set; }
 
@@ -19,7 +18,12 @@ public class InteractableTrigger : MonoBehaviour
 
     private void Start()
     {
-        interaction = new Interaction(interactionTexts, isPlayerText);
+        if (TryGetComponent(out InteractionsList list))
+        {
+            interactions = list.Interactions;
+
+            if(interactions.Count > 0 ) interaction = interactions[0];
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

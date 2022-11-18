@@ -91,19 +91,19 @@ public class InteractionSystem : MonoBehaviour
             return;
         }
 
-        activeInteractionIndex = index;
-
         StopAllCoroutines();
 
-        ChangeColorsToActive(interaction.isTextPlayer[index]);
+        activeInteractionIndex = index;
+
+        ChangeColorsToActive(interaction.isTextPlayer[activeInteractionIndex]);
 
         if (!skipTyping)
-            TypingCoroutine = StartCoroutine(DisplayText(interaction.texts[index], interaction.isTextPlayer[index]));
+            TypingCoroutine = StartCoroutine(DisplayText(interaction.texts[activeInteractionIndex], interaction.isTextPlayer[activeInteractionIndex]));
         else
         {
             TextToDisplay = activeInteraction.texts[activeInteractionIndex];
 
-            if (interaction.isTextPlayer[index])
+            if (interaction.isTextPlayer[activeInteractionIndex])
             {
                 StartCoroutine(StartRotating(RectPlayerImage, 3f));
                 StartCoroutine(StartRotating(RectCharacterImage));

@@ -1029,6 +1029,7 @@ GameObject:
   - component: {fileID: 575051127}
   - component: {fileID: 575051128}
   - component: {fileID: 575051129}
+  - component: {fileID: 575051130}
   m_Layer: 0
   m_Name: BlackHatGuy
   m_TagString: Untagged
@@ -1171,16 +1172,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11c4831cc29edb64ca4e46039cf6b2d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionTexts:
-  - What are you looking for in here?
-  - ???
-  - Who you are?
-  - Me.
-  - Okay...
-  - Anyway you wanna help me find a key to this house?
-  - Sure.
-  - I think key maybe somewhere in this forest, but Idk tbh
-  isPlayerText: 0001000100000100
+--- !u!114 &575051130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 575051123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e382e1ffbc6e12445b9af8694f4f1559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -28257,6 +28260,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4610019090456470633, guid: 35fc0b2d036faf040bf51de3feb7f191, type: 3}
+      propertyPath: m_RenderPostProcessing
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4610019090755028220, guid: 35fc0b2d036faf040bf51de3feb7f191, type: 3}
       propertyPath: m_RootOrder
       value: 2

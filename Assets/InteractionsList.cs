@@ -6,6 +6,5 @@ public abstract class InteractionsList : MonoBehaviour
 {
     public abstract List<Interaction> Interactions { get; set; }
 
-    
-
+    public abstract Interaction GetActiveInteraction(); 
 }

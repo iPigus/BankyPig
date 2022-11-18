@@ -5,25 +5,17 @@ using UnityEngine;
 
 public class InteractableTrigger : MonoBehaviour
 {
-    List<Interaction> interactions = new();
+    Interaction interaction => interactions.GetActiveInteraction();
 
-    Interaction interaction { get; set; }
+    InteractionsList interactions;
 
     public bool isInteractable { get; private set; } = true;
 
     private void Awake()
     {
         CheckIfHasTrigger();
-    }
 
-    private void Start()
-    {
-        if (TryGetComponent(out InteractionsList list))
-        {
-            interactions = list.Interactions;
-
-            if(interactions.Count > 0 ) interaction = interactions[0];
-        }
+        interactions = GetComponent<InteractionsList>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

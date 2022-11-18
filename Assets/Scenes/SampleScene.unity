@@ -1015,6 +1015,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2100072510549963796, guid: 9ae041e30cae08046a432ef684a42ca4, type: 3}
   m_PrefabInstance: {fileID: 498275947}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &545506353
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 545506354}
+  m_Layer: 0
+  m_Name: ItemFoundSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &545506354
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545506353}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &575051123
 GameObject:
   m_ObjectHideFlags: 0
@@ -27253,36 +27284,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6714221968683075634, guid: 0e7789804cd1e4147bcac3b872c52f04, type: 3}
   m_PrefabInstance: {fileID: 6714221969344887639}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1571661926 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4610019090755028221, guid: 35fc0b2d036faf040bf51de3feb7f191, type: 3}
-  m_PrefabInstance: {fileID: 4610019090224438295}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1571661935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1571661926}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 435f1e2cbdbccd447b6e18d5ab01e065, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isPlayerInteractable: 1
---- !u!114 &1571661944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1571661926}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac87c4cd1069fea43bffc8f388e59941, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1571870065
 GameObject:
   m_ObjectHideFlags: 0
@@ -27883,10 +27884,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1444440195103210705, guid: a66acc3080ff6de4ca223612f9ce3b8d, type: 3}
-      propertyPath: m_Name
-      value: Equippable
-      objectReference: {fileID: 0}
     - target: {fileID: 2362633627973989308, guid: a66acc3080ff6de4ca223612f9ce3b8d, type: 3}
       propertyPath: m_RootOrder
       value: 14
@@ -28291,22 +28288,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4610019090456470632, guid: 35fc0b2d036faf040bf51de3feb7f191, type: 3}
-      propertyPath: m_BackGroundColor.b
-      value: 0.3921569
-      objectReference: {fileID: 0}
-    - target: {fileID: 4610019090456470632, guid: 35fc0b2d036faf040bf51de3feb7f191, type: 3}
-      propertyPath: m_BackGroundColor.g
-      value: 0.59607846
-      objectReference: {fileID: 0}
-    - target: {fileID: 4610019090456470632, guid: 35fc0b2d036faf040bf51de3feb7f191, type: 3}
-      propertyPath: m_BackGroundColor.r
-      value: 0.30588236
-      objectReference: {fileID: 0}
-    - target: {fileID: 4610019090456470633, guid: 35fc0b2d036faf040bf51de3feb7f191, type: 3}
-      propertyPath: m_RenderPostProcessing
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4610019090755028220, guid: 35fc0b2d036faf040bf51de3feb7f191, type: 3}
       propertyPath: m_RootOrder
       value: 2

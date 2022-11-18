@@ -60,7 +60,6 @@ public class PlayerInventory : MonoBehaviour
         Items = new();
 
         Items.Add(AllItems.GetItemFromId(0));
-        Items.Add(AllItems.GetItemFromId(0));
     }
 
     #region Input Stuff

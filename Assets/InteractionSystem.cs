@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEditor.Rendering;
+using UnityEngine.UI;
 
 public class InteractionSystem : MonoBehaviour
 {
@@ -93,7 +95,9 @@ public class InteractionSystem : MonoBehaviour
 
         StopAllCoroutines();
 
-        if(!skipTyping)
+        ChangeColorsToActive(interaction.isTextPlayer[index]);
+
+        if (!skipTyping)
             TypingCoroutine = StartCoroutine(DisplayText(interaction.texts[index], interaction.isTextPlayer[index]));
         else
         {
@@ -193,6 +197,80 @@ public class InteractionSystem : MonoBehaviour
             yield return new WaitForSecondsRealtime(0.02f);
         }
     }
+
+    void ChangeColorsToActive(bool activePlayer = true)
+    {
+        StartCoroutine(WhiteOut(activePlayer));
+        StartCoroutine(BlackOut(activePlayer));
+        StartCoroutine(ChangeSizes(activePlayer));
+    }
+
+    Image PlayerImage => RectPlayerImage.GetComponentInChildren<Image>();
+    Image CharacterImage => RectCharacterImage.GetComponentInChildren<Image>();
+
+    IEnumerator WhiteOut(bool isTextPlayer = true)
+    {
+        Image ImageToChange = isTextPlayer ? PlayerImage : CharacterImage;
+
+        if (ImageToChange.color != Color.white)
+        {
+            float startingTint = ImageToChange.color.g;
+
+            for (float i = 1; i <= 20; i++)
+            {
+                float tint = startingTint + (((1f - startingTint) / 20f) * i);
+
+                ImageToChange.color = new(tint, tint, tint, 1);
+
+                yield return new WaitForSecondsRealtime(.01f);
+            }
+        }
+
+        yield break;
+    }
+    IEnumerator BlackOut(bool isTextPlayer = true)
+    {
+        Image ImageToChange = isTextPlayer ? CharacterImage : PlayerImage;
+
+        if (ImageToChange.color != new Color(.5f,.5f,.5f,1f))
+        {
+            float startingTint = ImageToChange.color.g;
+
+            for (float i = 1; i <= 20; i++)
+            {
+                float tint = startingTint - (((startingTint - 0.5f) / 20f) * i);
+
+                ImageToChange.color = new(tint, tint, tint, 1);
+
+                yield return new WaitForSecondsRealtime(.01f);
+            }
+        }
+
+        yield break;
+    }
+
+    IEnumerator ChangeSizes(bool isTextPlayer = true)
+    {
+        RectTransform ImageToScaleUp = isTextPlayer ? RectPlayerImage : RectCharacterImage;
+        RectTransform ImageToShrinkDown = isTextPlayer ? RectCharacterImage : RectPlayerImage;
+
+        float startScaleUpSize = ImageToScaleUp.localScale.x;
+        float startShrinkDownSize = ImageToShrinkDown.localScale.x;
+
+        for (int i = 1; i <= 20; i++)
+        {
+            float scaleUpScale = startScaleUpSize + (((1f - startScaleUpSize) / 20f) * i);
+            float shrinkDownScale = startShrinkDownSize - (((startShrinkDownSize - 0.9f) / 20f) * i);
+
+            if (ImageToScaleUp.localScale.magnitude != 1f) ImageToScaleUp.localScale = Vector3.one * scaleUpScale;
+            if (ImageToShrinkDown.localScale.magnitude != .9f) ImageToShrinkDown.localScale = Vector3.one * shrinkDownScale;
+
+            yield return new WaitForSecondsRealtime(.01f);
+        }
+
+        yield break;
+    }
+
     #endregion
 
     #region Input Stuff

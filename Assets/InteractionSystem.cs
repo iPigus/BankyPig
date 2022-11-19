@@ -182,14 +182,14 @@ public class InteractionSystem : MonoBehaviour
             {
                 if (Mathf.Abs(objectToRotate.eulerAngles.z) > Mathf.Abs(MaxRotation))
                 {
-                    isRotatingRight = !isRotatingRight;
+                    isRotatingRight = false;
                 }
             }
             else
             {
                 if (Mathf.Abs(360f - objectToRotate.eulerAngles.z) > Mathf.Abs(MaxRotation))
                 {
-                    isRotatingRight = !isRotatingRight;
+                    isRotatingRight = true;
                 }
             }
             

@@ -129,6 +129,8 @@ public class InteractionSystem : MonoBehaviour
     {
         Time.timeScale = 1f;
 
+
+
         InteractionUI.SetActive(false);
     }
 

@@ -10,6 +10,7 @@ public class PlayerInteractions : MonoBehaviour
     public bool isInterationAvailable => interactionToChose;
     public static bool isInInteraction => InteractionSystem.Singleton.isInteractionActive;
     public Interaction interactionToChose { get; set; } 
+    public InteractionsList activeInteractionList { get; set; }
 
     public Controls Controls { get; set; }
 

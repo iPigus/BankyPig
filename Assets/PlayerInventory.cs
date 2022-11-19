@@ -11,6 +11,12 @@ public class PlayerInventory : MonoBehaviour
 
     public static bool isInventoryOpen => InventorySystem.Singleton.isInventoryOpen;
 
+    public int activeItem
+    {
+        get => InventorySystem.Singleton.activeItem;
+        set => InventorySystem.Singleton.activeItem = value;
+    }
+
     Controls controls;
 
     private void Awake()
@@ -38,6 +44,8 @@ public class PlayerInventory : MonoBehaviour
     {
         if (PlayerMovement.Singleton.isAttacking || NewItemSystem.isNewItemSystemActive) return;
 
+        CheckIfActiveItemIsEquippable();
+
         InventorySystem.Singleton.OpenInventory();
 
         timeScaleBeforeOpening = Time.timeScale;
@@ -48,11 +56,30 @@ public class PlayerInventory : MonoBehaviour
     {
         if (!isInventoryOpen) return;
 
+        CheckIfActiveItemIsEquippable();
+
         InventorySystem.Singleton.CloseInventory();
 
         Time.timeScale = timeScaleBeforeOpening;
         
         timeScaleBeforeOpening = 0;
+    }
+
+    void CheckIfActiveItemIsEquippable()
+    {
+        if (Items.Count == 0) return;
+
+        if (Items[activeItem].IsEquippable || !Items.Where(x => x.IsEquippable).Any()) return;
+
+        for (int i = 0; i < Items.Count; i++)
+        {
+            if (Items[i].IsEquippable)
+            {
+                activeItem = i;
+
+                break;
+            }
+        }
     }
 
 

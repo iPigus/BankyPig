@@ -17,9 +17,9 @@ public class CollectableItem : MonoBehaviour
     {
         if (!collision.CompareTag("Player")) return;
 
-        if (PlayerInventory.Singleton.doesInventoryContainItem(ItemId)) return;
+        if (PlayerInventory.doesInventoryContainItem(ItemId)) return;
 
-        PlayerInventory.Singleton.AddItemToInventory(ItemId);
+        PlayerInventory.AddItemToInventory(ItemId);
         NewItemSystem.Singleton.ShowNewItem(ItemId);
 
         Destroy(gameObject);

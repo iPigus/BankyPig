@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void Attack()
     {
-        if (PlayerInventory.isInventoryOpen || PlayerInteractions.isInInteraction || NewItemSystem.isNewItemSystemActive) return;
+        if (PlayerInventory.isInventoryOpen || PlayerInteractions.isInInteraction || NewItemSystem.isNewItemSystemActive || PlayerInventory.GetActiveItemId() != 0) return;
 
         isAttacking = true;
         Animator.SetBool("isAttacking", isAttacking);

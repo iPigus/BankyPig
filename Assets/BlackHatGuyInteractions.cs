@@ -36,7 +36,7 @@ public class BlackHatGuyInteractions : InteractionsList
 
     public override int GetActiveInteractionIndex()
     {
-        if (PlayerInventory.Singleton.doesInventoryContainItem(1))
+        if (PlayerInventory.doesInventoryContainItem(1))
             return 1;
         else
             return 0;

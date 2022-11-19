@@ -21,6 +21,7 @@ public class DoorsEvent : EventItem
     {
         FadeOutScreen();
 
+        PlayerInventory.RemoveItemFromInventory(1); // key
         DoorCollider.enabled = false;
         Doors.sprite = OpenDoors;
     }

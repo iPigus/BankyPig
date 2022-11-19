@@ -42,7 +42,7 @@ public class PlayerInventory : MonoBehaviour
 
     void OpenInventory()
     {
-        if (PlayerMovement.Singleton.isAttacking || NewItemSystem.isNewItemSystemActive) return;
+        if (PlayerMovement.Singleton.isAttacking || NewItemSystem.isNewItemSystemActive || Items.Count == 0) return;
 
         CheckIfActiveItemIsEquippable();
 
@@ -87,12 +87,20 @@ public class PlayerInventory : MonoBehaviour
     {
         Items = new();
 
-        Items.Add(AllItems.GetItemFromId(0));
+        //Items.Add(AllItems.GetItemFromId(0));
     }
 
-    public void AddItemToInventory(int itemId) => Items.Add(AllItems.GetItemFromId(itemId));
+    public static void AddItemToInventory(int itemId) => Singleton.Items.Add(AllItems.GetItemFromId(itemId));
+    public static void RemoveItemFromInventory(int itemId) => Singleton.Items.Remove(AllItems.GetItemFromId(itemId));
+    public static Item GetActiveItem()
+    {
+        if (Singleton.Items.Count == 0) return null;
 
-    public bool doesInventoryContainItem(int itemId) => Items.Contains(AllItems.GetItemFromId(itemId));
+        return Singleton.Items[Singleton.activeItem];
+    }
+    public static int? GetActiveItemId() => GetActiveItem()?.Id;
+
+    public static bool doesInventoryContainItem(int itemId) => Singleton.Items.Contains(AllItems.GetItemFromId(itemId));
 
     #region Input Stuff
     private void OnEnable()

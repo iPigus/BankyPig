@@ -155,6 +155,8 @@ public class InventorySystem : MonoBehaviour
             }
         }
 
+        if (PlayerInventory.Singleton.Items.Count == 0) return;
+
         NameText.text = PlayerInventory.Singleton.Items[activeItem].Name;
         DescribtionText.text = PlayerInventory.Singleton.Items[activeItem].Describtion;
         EquitableObject.SetActive(PlayerInventory.Singleton.Items[activeItem].IsEquippable);

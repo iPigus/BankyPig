@@ -11,6 +11,7 @@ public class CloudGenerator : MonoBehaviour
     [Range(0.1f, 10f)] public float CloudFrequency = 1f;
     [Range(0, 400)] public uint MaxCloudCount = 40;
     [Range(0, 400)] public uint SpawnCloudCount = 15;
+    [Range(0f, 100f)] public float CloudSpawnRange = 35f;
 
     [Header("Cloud Movement")]
     [Range(0f, 360f)] public float CloudMoveDirection = 0f;
@@ -56,7 +57,7 @@ public class CloudGenerator : MonoBehaviour
         {
             for (int i = 0; i < 1000; i++)
             {
-                value = GetRandomFloat(-35f, 35f);
+                value = GetRandomFloat(-CloudSpawnRange, CloudSpawnRange);
 
                 if (isFarEnoughFromOtherClouds(value)) break;
             }
@@ -65,7 +66,7 @@ public class CloudGenerator : MonoBehaviour
         {
             for (int i = 0; i < 1000; i++)
             {
-                value = GetRandomFloat(-35f, 35f);
+                value = GetRandomFloat(-CloudSpawnRange, CloudSpawnRange);
 
                 if (isFarEnoughFromOtherClouds(value) && !isCloudOnScreen(value)) break;
             }

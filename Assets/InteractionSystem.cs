@@ -129,7 +129,7 @@ public class InteractionSystem : MonoBehaviour
     {
         Time.timeScale = 1f;
 
-
+        PlayerInteractions.Singleton.InvokeInteractionEndEvent();
 
         InteractionUI.SetActive(false);
     }

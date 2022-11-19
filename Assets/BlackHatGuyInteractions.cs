@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BlackHatGuyInteractions : InteractionsList
 {
     public override List<Interaction> Interactions { get; set; } = new();
+    public override UnityEvent InteractionEnded { get; set; } = new();
 
     List<string> interactionTexts0 = new (){ "What are you looking for in here?", "???", "Who you are?",
         "Me.", "Okay...", "Anyway you wanna help me find a key to this house?", "Sure.", "I think key maybe somewhere in this forest, but Idk tbh"
@@ -20,7 +22,7 @@ public class BlackHatGuyInteractions : InteractionsList
         AddInteraction(interactionTexts0, isPlayerText0);
         AddInteraction(interactionTexts1, isPlayerText1);
 
-
+        InteractionEnded.AddListener(EventCheck);
     }
     void AddInteraction(List<string> interactionTexts, List<bool> isPlayerText)
     {
@@ -29,9 +31,25 @@ public class BlackHatGuyInteractions : InteractionsList
 
     public override Interaction GetActiveInteraction()
     {
-        if(PlayerInventory.Singleton.doesInventoryContainItem(1))
-            return Interactions[1];
-        else 
-            return Interactions[0];
+        return Interactions[GetActiveInteractionIndex()];
+    }
+
+    public override int GetActiveInteractionIndex()
+    {
+        if (PlayerInventory.Singleton.doesInventoryContainItem(1))
+            return 1;
+        else
+            return 0;
+    }
+
+    public void EventCheck()
+    {
+        if (GetActiveInteractionIndex() == 0) return;
+
+        switch (GetActiveInteractionIndex())
+        {
+            case 1:  EventItemSystem.InvokeEvent("DoorOpening0"); break;
+            default: break;
+        }
     }
 }

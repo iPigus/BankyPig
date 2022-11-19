@@ -32,6 +32,13 @@ public class PlayerInteractions : MonoBehaviour
         InteractionSystem.Singleton.LoadInteraction(interactionToChose);
     }
 
+    public void InvokeInteractionEndEvent()
+    {
+        if (!activeInteractionList) return;
+
+        activeInteractionList.InteractionEnded.Invoke();
+    }
+
     private void OnEnable()
     {
         Controls.Enable();

@@ -7,6 +7,8 @@ using UnityEngine;
 public class InGameSettings : MonoBehaviour
 {
     public static InGameSettings Singleton { get; private set; }
+    public static bool isInGameSettings => isSettingsActive || isPauseActive;
+
 
     [SerializeField] GameObject SettingsUI;
     [SerializeField] GameObject PauseUI;
@@ -63,6 +65,9 @@ public class InGameSettings : MonoBehaviour
         controls.Player.Escape.performed += ctx => SwitchPauseState();
         controls.Player.Confirm.performed += ctx => Confirm();
         controls.Player.Movement.performed += ctx => Move(ctx.ReadValue<Vector2>().y);
+
+        if(SettingsUI.activeSelf) SettingsUI.SetActive(false);
+        if(PauseUI.activeSelf) PauseUI.SetActive(false);
     }
     void Move(float Ymove)
     {
@@ -87,7 +92,7 @@ public class InGameSettings : MonoBehaviour
             {
                 case 0: ClosePause(true); break;
                 case 1: ClosePause(); OpenSettings(); break;
-                case 2: UnityEngine.SceneManagement.SceneManager.LoadScene(0); break;
+                case 2: EventItemSystem.ClearEventList(); UnityEngine.SceneManagement.SceneManager.LoadScene(0); break;
                 default: break;
             }
         }
@@ -96,6 +101,9 @@ public class InGameSettings : MonoBehaviour
             switch (settingsActiveRow)
             {
                 case 0: CloseSettings(); OpenPause(); break;
+                case 1: PostProcessingSwitch(); break;
+                case 2: FullScreenSwitch(); break;
+                case 3: PlayerInventory.AddWeapon(); AddWeaponSettings.text = "weapon added!"; break;
                 default: break;
             }
         }
@@ -151,10 +159,26 @@ public class InGameSettings : MonoBehaviour
         AddWeaponSettings.color = settingsActiveRow == i ? ActiveColor : DeactiveColor; i++;
     }
 
-    #region Input stuff
+    void PostProcessingSwitch()
+    {
+        CameraController.ChangePostProcessing();
+
+        PostProcessingSettings.text = "Post Processing: " + (CameraController.postEffects ? "ON" : "OFF");
+    }
+
+    void FullScreenSwitch()
+    {
+        Screen.fullScreen = !Screen.fullScreen;
+
+        FullScreenSettings.text = "Fullscreen: " + (Screen.fullScreen ? "ON" : "OFF");
+    }
+
+    #region Input stuff and setting add weapon text on enable
     private void OnEnable()
     {
         controls.Enable();
+
+        AddWeaponSettings.text = "Add weapon";
     }
     private void OnDisable()
     {

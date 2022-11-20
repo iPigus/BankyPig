@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    public static bool isInAnySystem => PlayerInventory.isInventoryOpen || PlayerMovement.Singleton.isAttacking || NewItemSystem.isNewItemSystemActive;
+    public static bool isInAnySystem => PlayerInventory.isInventoryOpen || PlayerMovement.Singleton.isAttacking || NewItemSystem.isNewItemSystemActive || InGameSettings.isInGameSettings;
 }

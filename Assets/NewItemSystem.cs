@@ -78,6 +78,8 @@ public class NewItemSystem : MonoBehaviour
     }
     void TryToLeave()
     {
+        if (!NewItemUI.activeSelf) return;
+
         if (!isLeaveable) return;
         
         StopShowingItem();

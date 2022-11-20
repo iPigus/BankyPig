@@ -1,18 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class CameraController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static CameraController Singleton { get; private set; }
+
+    new Camera camera;
+
+    bool doPostEffects => camera.GetUniversalAdditionalCameraData().renderPostProcessing;
+    private void Awake()
     {
+        Singleton = this;
+
+        camera = GetComponent<Camera>();
         
+        camera.GetUniversalAdditionalCameraData().renderPostProcessing = PlayerPrefs.GetInt("GFX") == 0;
     }
 
-    // Update is called once per frame
-    void Update()
+    public static bool postEffects => Singleton.doPostEffects;
+    public static void ChangePostProcessing() => ChangePostProcessing(!Singleton.doPostEffects);
+    public static void ChangePostProcessing(bool toState)
     {
-        
+        PlayerPrefs.SetInt("GFX", toState ? 0 : 1);
+
+        Singleton.camera.GetUniversalAdditionalCameraData().renderPostProcessing = toState;
     }
+
 }

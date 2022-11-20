@@ -32,9 +32,9 @@ public class PlayerInventory : MonoBehaviour
         controls.Player.Movement.performed += ctx => MoveInInventory(ctx.ReadValue<Vector2>().x);
     }
 
-    private void Start()
+    public static void AddWeapon()
     {
-        Items.Add(AllItems.GetItemFromId(0));
+        Singleton.Items.Add(AllItems.GetItemFromId(0));
     }
 
     float timeScaleBeforeOpening;

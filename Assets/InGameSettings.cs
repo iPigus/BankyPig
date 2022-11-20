@@ -31,7 +31,7 @@ public class InGameSettings : MonoBehaviour
         get => _pauseActiveRow;
         set
         {
-            if (!(value >= 0 && value < 4)) return; 
+            if (!(value >= 0 && value < 3)) return; 
                 
             _pauseActiveRow = value;
             SetActiveColorInPause();

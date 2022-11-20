@@ -6,6 +6,10 @@ public class EventItemSystem : MonoBehaviour
 {
     public static Dictionary<string, EventItem> EventsList = new();
 
+    private void Start()
+    {
+        EventsList = new();
+    }
     public static void InvokeEvent(string eventName)
     {
         if(EventsList.TryGetValue(eventName, out EventItem item))

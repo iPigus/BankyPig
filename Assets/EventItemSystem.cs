@@ -8,13 +8,15 @@ public class EventItemSystem : MonoBehaviour
 
     private void Start()
     {
-        EventsList = new();
+        
     }
     public static void InvokeEvent(string eventName)
     {
-        if(EventsList.TryGetValue(eventName, out EventItem item))
+        if (EventsList.TryGetValue(eventName, out EventItem item))
         {
             item.Event();
         }
+        else
+            Debug.LogError("Event not found!");
     }
 }

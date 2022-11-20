@@ -10,7 +10,7 @@ public abstract class EventItem : MonoBehaviour
 
     public virtual void Awake()
     {
-        AddToEventList();
+        AddToEventList();   
     }
     public virtual void AddToEventList()
     {

@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Movement(Vector2 input)
     {
-        if (isAttacking || PlayerInventory.isInventoryOpen || PlayerInteractions.isInInteraction || NewItemSystem.isNewItemSystemActive) input = new();
+        if (isAttacking || PlayerManager.isInAnySystem) input = new();
 
         Animator.SetFloat("Movement", input.magnitude);
 
@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void Attack()
     {
-        if (PlayerInventory.isInventoryOpen || PlayerInteractions.isInInteraction || NewItemSystem.isNewItemSystemActive || PlayerInventory.GetActiveItemId() != 0) return;
+        if (PlayerManager.isInAnySystem || PlayerInventory.GetActiveItemId() != 0) return;
 
         isAttacking = true;
         Animator.SetBool("isAttacking", isAttacking);

@@ -27,7 +27,7 @@ public class PlayerInteractions : MonoBehaviour
     }
     void InteractPerformed()
     {
-        if (!isInterationAvailable || isInInteraction || PlayerInventory.isInventoryOpen || PlayerMovement.Singleton.isAttacking || NewItemSystem.isNewItemSystemActive) return;
+        if (!isInterationAvailable || isInInteraction || PlayerManager.isInAnySystem) return;
 
         InteractionSystem.Singleton.LoadInteraction(interactionToChose);
     }

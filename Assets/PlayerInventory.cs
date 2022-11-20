@@ -42,7 +42,7 @@ public class PlayerInventory : MonoBehaviour
 
     void OpenInventory()
     {
-        if (PlayerMovement.Singleton.isAttacking || NewItemSystem.isNewItemSystemActive || Items.Count == 0) return;
+        if (PlayerManager.isInAnySystem || Items.Count == 0) return;
 
         CheckIfActiveItemIsEquippable();
 

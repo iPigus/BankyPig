@@ -136,6 +136,11 @@ public class CloudGenerator : MonoBehaviour
     {
         yield return new WaitForSeconds(DestroyCloudTime);
 
+        while (isCloudOnScreen(cloud.transform.position))
+        {
+            yield return new WaitForSeconds(1f);
+        }
+
         Clouds.Remove(cloud);
         Destroy(cloud);
     }

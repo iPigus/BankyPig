@@ -170,7 +170,7 @@ public class InGameSettings : MonoBehaviour
     {
         Screen.fullScreen = !Screen.fullScreen;
 
-        FullScreenSettings.text = "Fullscreen: " + (Screen.fullScreen ? "ON" : "OFF");
+        FullScreenSettings.text = "Fullscreen: " + (!Screen.fullScreen ? "ON" : "OFF");
     }
 
     #region Input stuff and setting add weapon text on enable

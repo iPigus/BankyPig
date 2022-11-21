@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class CloudGenerator : MonoBehaviour
 {
-    [SerializeField] GameObject Cloud;  // theres some bug with clouds despawning after some time need to be enquired
+    [SerializeField] GameObject Cloud;
 
     [Header ("Cloud Spawning")]
     [Range(0.1f, 10f)] public float CloudFrequency = 1f;
     [Range(0, 400)] public uint MaxCloudCount = 40;
     [Range(0, 400)] public uint SpawnCloudCount = 15;
     [Range(0f, 100f)] public float CloudSpawnRange = 35f;
+    [Range(0f, 10000f)] public float DestroyCloudTime = 1000f;
 
     [Header("Cloud Movement")]
     [Range(0f, 360f)] public float CloudMoveDirection = 0f;
@@ -133,8 +134,6 @@ public class CloudGenerator : MonoBehaviour
     
     IEnumerator DestroyCloud(GameObject cloud)
     {
-        float DestroyCloudTime = 240f;
-
         yield return new WaitForSeconds(DestroyCloudTime);
 
         Clouds.Remove(cloud);

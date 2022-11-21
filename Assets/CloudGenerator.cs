@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class CloudGenerator : MonoBehaviour
 {
-    [SerializeField] GameObject Cloud;
+    [SerializeField] GameObject Cloud;  // theres some bug with clouds despawning after some time need to be enquired
 
     [Header ("Cloud Spawning")]
     [Range(0.1f, 10f)] public float CloudFrequency = 1f;

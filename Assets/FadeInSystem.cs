@@ -14,7 +14,7 @@ public class FadeInSystem : MonoBehaviour
     {
         Singleton = this;
 
-        FadeIn();
+        FadeOut();
     }
 
     public static void FadeIn()
@@ -43,7 +43,7 @@ public class FadeInSystem : MonoBehaviour
             {
                 float color = i / frameRate;
 
-                FadeTexture.color = new(1, 1, 1, color);
+                FadeTexture.color = new(0, 0, 0, color);
 
                 yield return new WaitForEndOfFrame();
             }
@@ -56,13 +56,13 @@ public class FadeInSystem : MonoBehaviour
             {
                 float color = i / 50;
 
-                FadeTexture.color = new(1, 1, 1, color);
+                FadeTexture.color = new(0, 0, 0, color);
 
                 yield return new WaitForFixedUpdate();
             }
         }
 
-        FadeTexture.color = new(1, 1, 1, 1);
+        FadeTexture.color = new(0,0,0, 1);
 
         yield break;
     }
@@ -78,7 +78,7 @@ public class FadeInSystem : MonoBehaviour
             {
                 float color = 1 - i / frameRate;
 
-                FadeTexture.color = new(1, 1, 1, color);
+                FadeTexture.color = new(0,0,0, color);
 
                 yield return new WaitForEndOfFrame();
             }
@@ -91,13 +91,13 @@ public class FadeInSystem : MonoBehaviour
             {
                 float color = 1 - i / 50;
 
-                FadeTexture.color = new(1, 1, 1, color);
+                FadeTexture.color = new(0,0,0, color);
 
                 yield return new WaitForFixedUpdate();
             }
         }
 
-        FadeTexture.color = new(1, 1, 1, 1);
+        FadeTexture.color = new(0,0,0, 0);
 
         yield break;
     }

@@ -16,6 +16,18 @@ public class FadeInSystem : MonoBehaviour
         FadeOut();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            FadeIn();
+        }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            FadeOut();
+        }
+    }
+
     public static void FadeIn()
     {
         Singleton.StopAllCoroutines();
@@ -38,7 +50,7 @@ public class FadeInSystem : MonoBehaviour
         {
             if(frameRate < 30) frameRate = 30;
 
-            for (int i = 0; i < frameRate; i++)
+            for (float i = 0; i < frameRate; i++)
             {
                 float color = i / frameRate;
 
@@ -51,7 +63,7 @@ public class FadeInSystem : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < 50; i++)
+            for (float i = 0; i < 50; i++)
             {
                 float color = i / 50;
 
@@ -73,7 +85,7 @@ public class FadeInSystem : MonoBehaviour
         {
             if (frameRate < 30) frameRate = 30;
 
-            for (int i = 0; i < frameRate; i++)
+            for (float i = 0; i < frameRate; i++)
             {
                 float color = 1 - i / frameRate;
 
@@ -86,7 +98,7 @@ public class FadeInSystem : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < 50; i++)
+            for (float i = 0; i < 50; i++)
             {
                 float color = 1 - i / 50;
 

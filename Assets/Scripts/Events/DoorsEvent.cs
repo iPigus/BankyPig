@@ -19,16 +19,23 @@ public class DoorsEvent : EventItem
     }
     public override void Event()
     {
-        FadeOutScreen();
+        StartCoroutine(EventCoroutine());
+    }
+
+    IEnumerator EventCoroutine()
+    {
+        FadeInSystem.FadeIn();
+
+        while (!FadeInSystem.isFadedIn)
+        {
+             yield return new WaitForEndOfFrame();
+        }
 
         FadeInSystem.FadeOut();
         PlayerInventory.RemoveItemFromInventory(1); // key
         DoorCollider.enabled = false;
         Doors.sprite = OpenDoors;
-    }
 
-    void FadeOutScreen()
-    {
-
+        yield break;
     }
 }

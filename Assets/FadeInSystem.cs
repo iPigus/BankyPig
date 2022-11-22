@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,11 @@ public class FadeInSystem : MonoBehaviour
 
     [SerializeField] Image FadeTexture;
 
+    public static bool isFadedOut => Singleton.FadeTexture.color.a == 0;
+    public static bool isFadedIn => Singleton.FadeTexture.color.a == 1;
+    public static bool isFadingOut { get; private set; } = false;
+    public static bool isFadingIn { get; private set; } = false;
+
     private void Awake()
     {
         Singleton = this;
@@ -16,16 +22,11 @@ public class FadeInSystem : MonoBehaviour
         FadeOut();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            FadeIn();
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            FadeOut();
-        }
+        if (isFadingOut && isFadedOut) isFadingOut = false;
+
+        if (isFadingIn && isFadedIn) isFadingIn = false;
     }
 
     public static void FadeIn()

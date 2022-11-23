@@ -6,6 +6,8 @@ public class LoopingEnemy : EnemyMovement
 {
     public List<Vector2> waypoints = new();
 
+    
+
     protected int _acitveWaypoint = 0;
     public int activeWaypoint
     {

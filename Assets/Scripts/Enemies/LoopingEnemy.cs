@@ -6,15 +6,13 @@ public class LoopingEnemy : EnemyMovement
 {
     public List<Vector2> waypoints = new();
 
-    
-
     protected int _acitveWaypoint = 0;
     public int activeWaypoint
     {
         get => _acitveWaypoint;
         set
         {
-            if(value >= 0 || value < waypoints.Count - 1) 
+            if(value <= 0 || value > waypoints.Count - 1) 
             {
                 if (value > 0) value = waypoints.Count - 1;
                 else
@@ -44,7 +42,10 @@ public class LoopingEnemy : EnemyMovement
     {
         if (Mathf.Abs((Rigidbody.position - waypoints[activeWaypoint]).magnitude) < .05f)
         {
-            activeWaypoint++;
+            if (activeWaypoint == waypoints.Count - 1)
+                activeWaypoint = 0;
+            else 
+                activeWaypoint++;
 
             SetPositionToGo(waypoints[activeWaypoint]);
         }

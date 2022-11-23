@@ -26,10 +26,16 @@ public class LoopingEnemy : EnemyMovement
     protected override void Awake()
     {
         base.Awake();
+
+        SetPositionToGo(waypoints[activeWaypoint]);
+
+        CheckForWaypointCount();
     }
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
+
+        CheckIfWaypointReached();
     }
 
     void CheckIfWaypointReached()
@@ -37,6 +43,14 @@ public class LoopingEnemy : EnemyMovement
         if (Mathf.Abs((Rigidbody.position - waypoints[activeWaypoint]).magnitude) < .05f)
         {
             activeWaypoint++;
+
+            SetPositionToGo(waypoints[activeWaypoint]);
         }
+    }
+    void CheckForWaypointCount()
+    {
+#if UNITY_EDITOR
+        if (waypoints.Count == 0) Debug.LogError("No waypoints set!");
+#endif
     }
 }

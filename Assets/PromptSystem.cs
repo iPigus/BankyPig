@@ -27,12 +27,14 @@ public class PromptSystem : MonoBehaviour
         if (Prompts.Count >= 1)
         {
             InteractionPrompt = Prompts[0];
-            PromptDictionary.Add("interaction", InteractionPrompt);
+            PromptDictionary.Add("interact", InteractionPrompt);
+            InteractionPrompt.SetActive(false);
         }
         if (Prompts.Count >= 2)
         {
             SwitchPrompt = Prompts[1];
             PromptDictionary.Add("switch", SwitchPrompt);
+            SwitchPrompt.SetActive(false);
         }
     }
 
@@ -45,6 +47,8 @@ public class PromptSystem : MonoBehaviour
         }
         else // need to make it add new prompt instead
         {
+            Debug.LogError("Couldn't find prompt with name :" + promptName);
+
             GameObject newPrompt = Instantiate(Singleton.basePrompt, Singleton.transform.GetChild(0));
 
             newPrompt.GetComponent<PromptWindow>().SetPrompt(promptName, keyId);

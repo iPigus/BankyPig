@@ -35,6 +35,11 @@ public class PlayerInventory : MonoBehaviour
         controls.Player.Movement.performed += ctx => MoveInInventory(ctx.ReadValue<Vector2>().x);
     }
 
+    private void FixedUpdate()
+    {
+        PromptSystem.SwitchPromptState(isOpenable, "switch");
+    }
+
     public static void AddWeapon()
     {
         Singleton.Items.Add(AllItems.GetItemFromId(0));

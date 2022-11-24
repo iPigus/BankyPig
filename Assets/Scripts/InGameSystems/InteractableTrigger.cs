@@ -26,7 +26,7 @@ public class InteractableTrigger : MonoBehaviour
         {
             playerInteractions.interactionToChose = interaction;
             playerInteractions.activeInteractionList = interactions;
-            PromptSystem.SwitchPromptState(true, "Interaction");
+            PromptSystem.SwitchPromptState(true, "Interact");
         }
         else
         {
@@ -43,7 +43,7 @@ public class InteractableTrigger : MonoBehaviour
             {
                 playerInteractions.interactionToChose = null;
                 playerInteractions.activeInteractionList = null;
-                PromptSystem.TurnPromptOff();
+                PromptSystem.SwitchPromptState(false, "Interact");
             }
         }
         else

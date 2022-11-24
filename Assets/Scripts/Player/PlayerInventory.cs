@@ -11,6 +11,9 @@ public class PlayerInventory : MonoBehaviour
 
     public static bool isInventoryOpen => InventorySystem.Singleton.isInventoryOpen;
 
+
+    public static bool isOpenable => Singleton.Items.Count != 0;
+
     public int activeItem
     {
         get => InventorySystem.Singleton.activeItem;
@@ -47,7 +50,7 @@ public class PlayerInventory : MonoBehaviour
 
     void OpenInventory()
     {
-        if (PlayerManager.isInAnySystem || Items.Count == 0) return;
+        if (PlayerManager.isInAnySystem || !isOpenable) return;
 
         CheckIfActiveItemIsEquippable();
 

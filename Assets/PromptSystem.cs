@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class PromptSystem : MonoBehaviour
 {
     public static PromptSystem Singleton { get; private set; }
+
+    public static int InputType = 0;
 
     [SerializeField] Image PromptBackground;
     [SerializeField] Image Image;

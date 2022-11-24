@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Interact
+  m_text: Essa
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9d4bfff933c797b4a9a09a906dbb54ae, type: 2}
   m_sharedMaterial: {fileID: 8364083806746482464, guid: 9d4bfff933c797b4a9a09a906dbb54ae, type: 2}
@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 45236455894809954}
   - component: {fileID: 45236455894809952}
   - component: {fileID: 45236455894809953}
+  - component: {fileID: 422936776}
   m_Layer: 5
   m_Name: Prompt
   m_TagString: Untagged
@@ -213,6 +214,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &422936776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 45236455894809955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9965c948938a3f44488b86ab2c7daa76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BackgroundImage: {fileID: 45236455894809953}
+  KeyImage: {fileID: 45236456858596103}
+  text: {fileID: 45236455560950658}
+  keys: []
 --- !u!1 &45236456858596153
 GameObject:
   m_ObjectHideFlags: 0

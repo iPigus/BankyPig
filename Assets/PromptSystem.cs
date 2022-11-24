@@ -11,95 +11,45 @@ public class PromptSystem : MonoBehaviour
 
     public static int InputType = 0;
 
-    [SerializeField] Image PromptBackground;
-    [SerializeField] Image Image;
-    [SerializeField] TextMeshProUGUI PromptText;
+    [SerializeField] List<GameObject> Prompts = new List<GameObject>();
 
-    [SerializeField] Sprite eKey;  
-    [SerializeField] Sprite qKey;  
-    [SerializeField] Sprite spacebarKey;  
+    [SerializeField] GameObject basePrompt;
+
+    GameObject InteractionPrompt { get; set; }
+    GameObject SwitchPrompt { get; set; }
+
+    Dictionary<string, GameObject> PromptDictionary { get; set; } = new();
 
     private void Awake()
     {
         Singleton = this;
 
-
-        if(PromptBackground.color != new Color(0,0,0,0)) PromptBackground.color = new(0,0,0,0);
-        if(Image.color != new Color(0,0,0,0)) Image.color = new(0,0,0,0);
-        if(PromptText.color != new Color(0,0,0,0)) PromptText.color = new(0,0,0,0);
+        if (Prompts.Count >= 1)
+        {
+            InteractionPrompt = Prompts[0];
+            PromptDictionary.Add("interaction", InteractionPrompt);
+        }
+        if (Prompts.Count >= 2)
+        {
+            SwitchPrompt = Prompts[1];
+            PromptDictionary.Add("switch", SwitchPrompt);
+        }
     }
 
-    public static void SetPromptTo(int keybutton = 0, string text = "Interact")
+    public static void SwitchPromptState(bool active, string promptName) => SwitchPromptState(active, promptName, 0);
+    public static void SwitchPromptState(bool active,string promptName, int keyId)
     {
-        Singleton.PromptBackground.color = new Color32(123, 152, 183, 255);
-        Singleton.Image.color = Color.white;
-        Singleton.PromptText.color = new Color32(35, 35, 35, 255);
-
-        switch (keybutton)
+        if(Singleton.PromptDictionary.TryGetValue(promptName.ToLower(), out GameObject prompt))
         {
-            case 0: Singleton.Image.sprite = Singleton.eKey; break;
-            case 1: Singleton.Image.sprite = Singleton.qKey; break;
-            case 2: Singleton.Image.sprite = Singleton.spacebarKey; break;
-
-            default:break;
+            if(prompt.activeSelf != active) prompt.SetActive(active);             
         }
-
-        Singleton.Image.SetNativeSize();
-
-        Singleton.PromptText.text = text;
-    }
-
-    static Coroutine FadingOutCoroutine = null;
-
-    public static void TurnPromptOff()
-    {
-        if (FadingOutCoroutine != null) return;
-
-        FadingOutCoroutine = Singleton.StartCoroutine(FadeOut(Singleton.PromptBackground));
-        FadingOutCoroutine = Singleton.StartCoroutine(FadeOut(Singleton.PromptText));
-        FadingOutCoroutine = Singleton.StartCoroutine(FadeOut(Singleton.Image));
-    }
-    static IEnumerator FadeOut(Graphic graphic, bool skipAnimation = true)
-    {
-        if (skipAnimation)
+        else // need to make it add new prompt instead
         {
-            graphic.color = new(0, 0, 0, 0);
+            GameObject newPrompt = Instantiate(Singleton.basePrompt, Singleton.transform.GetChild(0));
 
-            yield break;
+            newPrompt.GetComponent<PromptWindow>().SetPrompt(promptName, keyId);
+
+            newPrompt.SetActive(active);
         }
-
-        int frameRate = Mathf.RoundToInt(1 / Time.deltaTime);
-
-        if (frameRate < 50)
-        {
-            if (frameRate < 30) frameRate = 30;
-
-            for (float i = 0; i < frameRate; i++)
-            {
-                float color = 1 - i / frameRate;
-
-                graphic.color = new(graphic.color.r, graphic.color.g, graphic.color.b, color);
-
-                yield return new WaitForEndOfFrame();
-            }
-
-
-        }
-        else
-        {
-            for (float i = 0; i < 50; i++)
-            {
-                float color = 1 - i / 50;
-
-                graphic.color = new(graphic.color.r, graphic.color.g, graphic.color.b, color);
-
-                yield return new WaitForFixedUpdate();
-            }
-        }
-
-        graphic.color = new(0, 0, 0, 0);
-        FadingOutCoroutine = null;
-
-        yield break;
     }
 }

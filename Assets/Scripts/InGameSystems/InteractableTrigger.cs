@@ -26,6 +26,7 @@ public class InteractableTrigger : MonoBehaviour
         {
             playerInteractions.interactionToChose = interaction;
             playerInteractions.activeInteractionList = interactions;
+            PromptSystem.SetPromptTo();
         }
         else
         {
@@ -42,6 +43,7 @@ public class InteractableTrigger : MonoBehaviour
             {
                 playerInteractions.interactionToChose = null;
                 playerInteractions.activeInteractionList = null;
+                PromptSystem.TurnPromptOff();
             }
         }
         else

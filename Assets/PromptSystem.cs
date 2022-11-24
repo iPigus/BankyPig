@@ -20,17 +20,17 @@ public class PromptSystem : MonoBehaviour
     {
         Singleton = this;
 
-        if(Image == null) Image = GetComponentInChildren<Image>();
-        if(PromptText == null) PromptText = GetComponentInChildren<TextMeshProUGUI>();
 
-        SetPromptTo("Essa", 1);
+        if(PromptBackground.color != new Color(0,0,0,0)) PromptBackground.color = new(0,0,0,0);
+        if(Image.color != new Color(0,0,0,0)) Image.color = new(0,0,0,0);
+        if(PromptText.color != new Color(0,0,0,0)) PromptText.color = new(0,0,0,0);
     }
 
-    public static void SetPromptTo(string text, int keybutton)
+    public static void SetPromptTo(int keybutton = 0, string text = "Interact")
     {
-        Singleton.PromptBackground.color = new(1, 1, 1, 1);
-        Singleton.Image.color = new(1, 1, 1, 1);
-        Singleton.PromptText.color = new(1, 1, 1, 1);
+        Singleton.PromptBackground.color = new Color32(123, 152, 183, 255);
+        Singleton.Image.color = Color.white;
+        Singleton.PromptText.color = new Color32(35, 35, 35, 255);
 
         switch (keybutton)
         {
@@ -43,6 +43,7 @@ public class PromptSystem : MonoBehaviour
 
         Singleton.Image.SetNativeSize();
 
+        Singleton.PromptText.text = text;
     }
 
     static Coroutine FadingOutCoroutine = null;
@@ -51,10 +52,19 @@ public class PromptSystem : MonoBehaviour
     {
         if (FadingOutCoroutine != null) return;
 
-        FadingOutCoroutine = Singleton.StartCoroutine(FadeOut());
+        FadingOutCoroutine = Singleton.StartCoroutine(FadeOut(Singleton.PromptBackground));
+        FadingOutCoroutine = Singleton.StartCoroutine(FadeOut(Singleton.PromptText));
+        FadingOutCoroutine = Singleton.StartCoroutine(FadeOut(Singleton.Image));
     }
-    static IEnumerator FadeOut()
+    static IEnumerator FadeOut(Graphic graphic, bool skipAnimation = true)
     {
+        if (skipAnimation)
+        {
+            graphic.color = new(0, 0, 0, 0);
+
+            yield break;
+        }
+
         int frameRate = Mathf.RoundToInt(1 / Time.deltaTime);
 
         if (frameRate < 50)
@@ -65,9 +75,7 @@ public class PromptSystem : MonoBehaviour
             {
                 float color = 1 - i / frameRate;
 
-                Singleton.PromptBackground.color = new(0, 0, 0, color);
-                Singleton.Image.color = new(0, 0, 0, color);
-                Singleton.PromptText.color = new(0, 0, 0, color);
+                graphic.color = new(graphic.color.r, graphic.color.g, graphic.color.b, color);
 
                 yield return new WaitForEndOfFrame();
             }
@@ -80,17 +88,13 @@ public class PromptSystem : MonoBehaviour
             {
                 float color = 1 - i / 50;
 
-                Singleton.PromptBackground.color = new(0, 0, 0, color);
-                Singleton.Image.color = new(0, 0, 0, color);
-                Singleton.PromptText.color = new(0, 0, 0, color);
+                graphic.color = new(graphic.color.r, graphic.color.g, graphic.color.b, color);
 
                 yield return new WaitForFixedUpdate();
             }
         }
 
-        Singleton.PromptBackground.color = new(0, 0, 0, 0);
-        Singleton.Image.color = new(0, 0, 0, 0);
-        Singleton.PromptText.color = new(0, 0, 0, 0);
+        graphic.color = new(0, 0, 0, 0);
         FadingOutCoroutine = null;
 
         yield break;

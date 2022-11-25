@@ -21,8 +21,34 @@ public class EnemyAttackAi : MonoBehaviour
 
     Vector2 FollowPosition => PlayerMovement.Singleton.transform.position;
     Vector2 BeforeFollowingPosition = new();
-    bool isFollowingPlayer { get; set; } = false;
+
+    bool _isFollowingPlayer = false;
+    bool isFollowingPlayer
+    {
+        get => _isFollowingPlayer && !shouldIgnorePlayer;
+        set => _isFollowingPlayer = value;
+    }
     bool isPlayerDetected { get; set; } = false;
+
+    bool _shouldIgnorePlayer = false;
+    bool shouldIgnorePlayer
+    {
+        get => _shouldIgnorePlayer;
+        set
+        {
+            if (!value) return;
+
+            _shouldIgnorePlayer = value;
+            StartCoroutine(IgnoreCooldown());
+        }
+    }
+    Coroutine IgnoreCoroutine;
+    IEnumerator IgnoreCooldown(float time = 5f)
+    {
+        yield return new WaitForSeconds(time);
+
+        _shouldIgnorePlayer = false;
+    }
 
     int Tick { get; set; } = 0;
     private void FixedUpdate()
@@ -94,5 +120,6 @@ public class EnemyAttackAi : MonoBehaviour
     void ReturnHome()
     {
         enemyMovement.SetPositionToGo(HomePosition);
+        shouldIgnorePlayer = true;
     }
 }

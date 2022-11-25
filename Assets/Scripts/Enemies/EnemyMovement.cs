@@ -30,7 +30,7 @@ public class EnemyMovement : MonoBehaviour
     {
         if (isAnimatorAttacking) return;
 
-        if ((goToPosition - Rigidbody.position).magnitude < 0.05f)
+        if ((goToPosition - Rigidbody.position).magnitude < 0.1f)
         {
             Animator.SetBool("isMoving", false);
 
@@ -39,7 +39,7 @@ public class EnemyMovement : MonoBehaviour
 
         Animator.SetBool("isMoving", true);
 
-        Vector2 movement = (goToPosition - Rigidbody.position).normalized * MovementSpeed * Time.deltaTime;
+        Vector2 movement = MovementSpeed * Time.deltaTime * (goToPosition - Rigidbody.position).normalized;
 
         CheckForCharacterFlip(movement.x);
 

@@ -40,11 +40,11 @@ public class PlayerHealth : MonoBehaviour
         _health = MaxHealth;
     }
 
-    public void Damage(int damage, float time = 0.2f)
+    public static void Damage(int damage, float time = 0.2f)
     {
-        Health -= damage;
+        Singleton.Health -= damage;
 
-        StartCoroutine(WhiteFlash(time));
+        Singleton.StartCoroutine(Singleton.WhiteFlash(time));
     }
     IEnumerator WhiteFlash(float time)
     {

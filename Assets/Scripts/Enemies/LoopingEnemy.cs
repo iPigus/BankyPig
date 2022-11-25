@@ -40,7 +40,7 @@ public class LoopingEnemy : EnemyMovement
 
     void CheckIfWaypointReached()
     {
-        if (Mathf.Abs((Rigidbody.position - waypoints[activeWaypoint]).magnitude) < .05f)
+        if (Mathf.Abs((Rigidbody.position - waypoints[activeWaypoint]).magnitude) < .1f)
         {
             if (activeWaypoint == waypoints.Count - 1)
                 activeWaypoint = 0;

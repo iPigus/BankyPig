@@ -49,11 +49,11 @@ public class DeadSystem : MonoBehaviour
 
         if (moveY > 0)
         {
-            activeRow++;
+            activeRow--;
         }
         else
         {
-            activeRow--;
+            activeRow++;
         }
     }
     void UpdateRows()
@@ -94,7 +94,14 @@ public class DeadSystem : MonoBehaviour
 
     static IEnumerator TimeSlowDown()
     {
-        
+        for (float i = 5; i > 0; i--)
+        {
+            Time.timeScale = i / 10f;
+
+            yield return new WaitForSecondsRealtime(1f);
+        }
+
+        Time.timeScale = 0f;
     }
 
     #region Inputs stuff

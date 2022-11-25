@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -35,6 +36,16 @@ public class PromptSystem : MonoBehaviour
             SwitchPrompt = Prompts[1];
             PromptDictionary.Add("switch", SwitchPrompt);
             SwitchPrompt.SetActive(false);
+        }
+    }
+
+    public static void TurnOffAllPrompts()
+    {
+        string[] keys = Singleton.PromptDictionary.Keys.ToArray();
+
+        for (int i = 0; i < keys.Length; i++)
+        {
+            SwitchPromptState(false, keys[i]);
         }
     }
 

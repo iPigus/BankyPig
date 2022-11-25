@@ -54,6 +54,12 @@ public class EnemyAttackAi : MonoBehaviour
         Tick++;
         if (Tick % 50 == 0) return;
 
+        if (PlayerHealth.isDead)
+        {
+            ReturnHome();
+            return;
+        }
+
         if (isFollowingPlayer) FollowPlayer();
 
         if(sholdGoHome()) ReturnHome();

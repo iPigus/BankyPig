@@ -40,6 +40,11 @@ public class PlayerHealth : MonoBehaviour
         _health = MaxHealth;
     }
 
+    private void FixedUpdate()
+    {
+        if (isDead && !DeadSystem.isDeadUIactive) DeadSystem.TurnOn();
+    }
+
     public static void Damage(int damage, float time = 0.2f)
     {
         if (isDead) return; 

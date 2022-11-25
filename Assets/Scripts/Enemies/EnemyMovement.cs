@@ -19,6 +19,8 @@ public class EnemyMovement : MonoBehaviour
     protected virtual void FixedUpdate()
     {
         MoveToSetPosition();
+
+        if(PlayerHealth.isDead) StopAttacking();
     }
 
     public void SetPositionToGo(Vector2 goToPosition)

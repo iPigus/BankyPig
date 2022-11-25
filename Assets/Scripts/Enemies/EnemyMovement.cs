@@ -28,6 +28,8 @@ public class EnemyMovement : MonoBehaviour
 
     protected void MoveToSetPosition()
     {
+        if (isAnimatorAttacking) return;
+
         if ((goToPosition - Rigidbody.position).magnitude < 0.05f)
         {
             Animator.SetBool("isMoving", false);

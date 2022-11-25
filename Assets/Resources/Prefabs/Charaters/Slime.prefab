@@ -221,4 +221,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Damage: 1
   isTrigger: 0
-  Cooldown: 0.2
+  Cooldown: 0.5

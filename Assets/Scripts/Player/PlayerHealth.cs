@@ -42,6 +42,8 @@ public class PlayerHealth : MonoBehaviour
 
     public static void Damage(int damage, float time = 0.2f)
     {
+        if (Singleton.isDead) return; 
+
         Singleton.Health -= damage;
 
         Singleton.StartCoroutine(Singleton.WhiteFlash(time));

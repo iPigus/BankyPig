@@ -49,4 +49,27 @@ public class EnemyMovement : MonoBehaviour
 
         transform.localScale = new(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
     }
+
+    bool _isAttacking = false;
+    public bool isAttacking
+    {
+        get => _isAttacking || isAnimatorAttacking;
+        set => _isAttacking = value;
+    }
+    bool isAnimatorAttacking => Animator.GetBool("isAttacking");
+    public virtual void StartAttacking()
+    {
+        isAttacking = true;
+        Animator.SetBool("isAttacking", true);
+    }
+    public virtual void StopAttacking()
+    {
+        isAttacking = false;
+    }
+    public void AnimatorEndAttacking()
+    {
+        if (_isAttacking) return;
+
+        Animator.SetBool("isAttacking", false);
+    }
 }

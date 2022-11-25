@@ -41,6 +41,7 @@ public class DeadSystem : MonoBehaviour
         if(isDeadUIactive) DeadUI.SetActive(false);
 
         controls.Player.Movement.performed += ctx => Move(ctx.ReadValue<Vector2>().y);
+        controls.Player.Confirm.performed += ctx => Confirm();
     }
     
     void Move(float moveY)
@@ -54,6 +55,14 @@ public class DeadSystem : MonoBehaviour
         else
         {
             activeRow++;
+        }
+    }
+    void Confirm()
+    {
+        switch (activeRow) 
+        {
+            case 0: TryAgain(); break;
+            case 1: MainMenu(); break;
         }
     }
     void UpdateRows()
@@ -94,15 +103,29 @@ public class DeadSystem : MonoBehaviour
 
     static IEnumerator TimeSlowDown()
     {
-        for (float i = 5; i > 0; i--)
+        for (float i = 10; i > 0; i--)
         {
-            Time.timeScale = i / 10f;
+            Time.timeScale = i / 20f;
 
-            yield return new WaitForSecondsRealtime(1f);
+            yield return new WaitForSecondsRealtime(.6f);
         }
 
         Time.timeScale = 0f;
     }
+
+    #region Functions 
+
+    void TryAgain()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);   
+    }
+
+    void MainMenu()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);   
+    }
+
+    #endregion 
 
     #region Inputs stuff
     private void OnEnable()

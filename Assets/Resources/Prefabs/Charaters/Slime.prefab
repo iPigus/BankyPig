@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 985188080283058302}
   - component: {fileID: 985188080283058297}
   - component: {fileID: 985188080283058298}
-  - component: {fileID: 985188080283058299}
   - component: {fileID: 985188080283058296}
   - component: {fileID: 985188080283058293}
   - component: {fileID: 985188080283058292}
+  - component: {fileID: 985188079901700239}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Enemy
@@ -59,7 +59,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!212 &985188080283058302
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -146,20 +146,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WhiteMaterial: {fileID: 2100000, guid: d572eb9270477ec49a429c2889438df9, type: 2}
   MaxHealth: 4
---- !u!114 &985188080283058299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 985188080283058301}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c919827408d0a44a9ecb87015d4b1c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MovementSpeed: 1
-  goToPosition: {x: 0, y: 0}
 --- !u!114 &985188080283058296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,6 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OffsetY: 0
+  isTileSet: 0
 --- !u!58 &985188080283058292
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -195,9 +182,27 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.08}
   serializedVersion: 2
   m_Radius: 0.3
+--- !u!114 &985188079901700239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985188080283058301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f07174d61a59df640994e966c959bf45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MovementSpeed: 1
+  waypoints:
+  - {x: -5, y: -1.7}
+  - {x: 0, y: -1.8}
+  - {x: 0.1, y: 3.3}
+  - {x: -5, y: 3.2}

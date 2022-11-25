@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class EnemyAttackAi : MonoBehaviour
 {
@@ -117,9 +115,23 @@ public class EnemyAttackAi : MonoBehaviour
         return false;
     }
 
-    void ReturnHome()
+    void ReturnHome() => StartCoroutine(ReturningHome());
+
+    bool isReturningHome = false;
+
+    IEnumerator ReturningHome()
     {
-        enemyMovement.SetPositionToGo(HomePosition);
         shouldIgnorePlayer = true;
+        if (!isReturningHome)
+        {
+            isReturningHome = true;
+
+            enemyMovement.SetPositionToGo(new(transform.position.x, transform.position.y));
+            yield return new WaitForSeconds(1f);
+        }
+        enemyMovement.SetPositionToGo(HomePosition);
+
+        yield return new WaitForSeconds(4f); // to give mobs some time before they come back at the player
+        isReturningHome = false;
     }
 }

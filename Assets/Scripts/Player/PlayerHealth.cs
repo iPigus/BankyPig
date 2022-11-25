@@ -29,7 +29,7 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    public bool isDead => Health <= 0;
+    public static bool isDead => Singleton.Health <= 0;
 
     private void Awake()
     {
@@ -42,7 +42,7 @@ public class PlayerHealth : MonoBehaviour
 
     public static void Damage(int damage, float time = 0.2f)
     {
-        if (Singleton.isDead) return; 
+        if (isDead) return; 
 
         Singleton.Health -= damage;
 
@@ -61,5 +61,12 @@ public class PlayerHealth : MonoBehaviour
         if (Animator.GetBool("isDead")) return;
 
         Animator.SetBool("isDead", true);
+        StartCoroutine(Dead());
+    }
+    IEnumerator Dead()
+    {
+        yield return new WaitForSeconds(1f);
+
+        Animator.SetBool("Dead", true);
     }
 }

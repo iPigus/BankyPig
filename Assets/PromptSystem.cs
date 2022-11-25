@@ -53,6 +53,8 @@ public class PromptSystem : MonoBehaviour
 
             newPrompt.GetComponent<PromptWindow>().SetPrompt(promptName, keyId);
 
+            Singleton.PromptDictionary.Add(promptName.ToLower(), newPrompt);
+
             newPrompt.SetActive(active);
         }
     }

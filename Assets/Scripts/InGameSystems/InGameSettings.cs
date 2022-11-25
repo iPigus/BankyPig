@@ -71,7 +71,7 @@ public class InGameSettings : MonoBehaviour
     }
     void Move(float Ymove)
     {
-        if (Ymove == 0) return;
+        if (Mathf.Abs(Ymove) < .8f) return;
 
         if(Ymove > 0)
         {

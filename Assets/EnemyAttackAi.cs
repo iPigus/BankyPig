@@ -1,12 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class EnemyAttackAi : MonoBehaviour
 {
     EnemyMovement enemyMovement => GetComponentInParent<EnemyMovement>();
 
+    public enum HomeDisanceForm : int
+    {
+        Square,
+        Circle
+    }
 
+    [Header("Basic Mob Info")]
+    public Vector2 HomePosition;
+    [Range(0f, 100f)] public float MaxDistanceFromHome = 10f;
+    public HomeDisanceForm homeDisanceForm;
+
+    Vector2 FollowPosition => PlayerMovement.Singleton.transform.position;
     Vector2 BeforeFollowingPosition = new();
     bool isFollowingPlayer { get; set; } = false;
     bool isPlayerDetected { get; set; } = false;
@@ -17,17 +30,23 @@ public class EnemyAttackAi : MonoBehaviour
         Tick++;
         if (Tick % 50 == 0) return;
 
+        if (isFollowingPlayer) FollowPlayer();
 
+        if(sholdGoHome()) ReturnHome();
     }
 
     void FollowPlayer()
     {
-        if (!isFollowingPlayer) BeforeFollowingPosition = transform.position;
+        enemyMovement.SetPositionToGo(FollowPosition);
     }
-    void StopFollowingPlayer()
+    void StartFollowingPlayer()
     {
-        GoBackTo();
+        if (!isFollowingPlayer) BeforeFollowingPosition = transform.position;
+
+        isFollowingPlayer = true;
     }
+    void StopFollowingPlayer() => StartCoroutine(StopFollowingAfter());
+    void StopFollowingPlayer(float time) => StartCoroutine(StopFollowingAfter(time));
 
     void GoBackTo() => GoBackTo(BeforeFollowingPosition);
     void GoBackTo(Vector2 position)
@@ -39,12 +58,41 @@ public class EnemyAttackAi : MonoBehaviour
     {
         if (!collision.CompareTag("Player")) return;
 
-        FollowPlayer();
+        StartFollowingPlayer();
+        isPlayerDetected = true;
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (!collision.CompareTag("Player")) return;  
         
         StopFollowingPlayer();
+        isPlayerDetected = false;
+    }
+
+    IEnumerator StopFollowingAfter(float time = 3f)
+    {
+        yield return new WaitForSeconds(time);
+
+        if (isPlayerDetected) yield break;
+
+        GoBackTo();
+
+        isFollowingPlayer = false;
+    }
+
+    bool sholdGoHome()
+    {
+        if ((HomePosition - (Vector2)transform.position).magnitude > MaxDistanceFromHome 
+            && homeDisanceForm == HomeDisanceForm.Circle) return true;
+
+        if ((Mathf.Abs(HomePosition.x - transform.position.x) > MaxDistanceFromHome || Mathf.Abs(HomePosition.y - transform.position.y) > MaxDistanceFromHome)
+            && homeDisanceForm == HomeDisanceForm.Square) return true;
+
+        return false;
+    }
+
+    void ReturnHome()
+    {
+        enemyMovement.SetPositionToGo(HomePosition);
     }
 }

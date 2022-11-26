@@ -15,7 +15,7 @@ public class InteractionSystem : MonoBehaviour
     [SerializeField] GameObject CharacterName; TextMeshProUGUI CharacterNameText => CharacterName.GetComponentInChildren<TextMeshProUGUI>();
     [SerializeField] GameObject PlayerName;
 
-    [SerializeField] RectTransform RectCharacterImage;
+    [SerializeField] RectTransform RectCharacterImage; Image characterImage => RectCharacterImage.GetComponentInChildren<Image>();
     [SerializeField] RectTransform RectPlayerImage;
 
     [Range(0f, 0.1f)] public float timeToTypeCharacter = .05f;
@@ -64,11 +64,15 @@ public class InteractionSystem : MonoBehaviour
     #endregion 
 
     #region Handling Messages
-    public void LoadInteraction(Interaction interaction)
+    public void LoadInteraction(Interaction interaction, GameObject interactionCharacter)
     {
         if (!interaction) { Debug.LogError("interaction is null!"); return; }
         
         if (interaction.texts.Count == 0) { Debug.LogError("interaction is doesn't contain texts!"); return; }
+
+        characterImage.sprite = interactionCharacter.GetComponent<SpriteRenderer>().sprite;
+
+        CharacterNameText.text = interactionCharacter.name;
 
         RectPlayerImage.eulerAngles = new();
         RectCharacterImage.eulerAngles = new();

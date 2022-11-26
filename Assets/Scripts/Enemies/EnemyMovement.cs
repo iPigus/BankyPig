@@ -9,7 +9,7 @@ public class EnemyMovement : MonoBehaviour
     protected Rigidbody2D Rigidbody;
     protected Animator Animator;
 
-    public Vector2 goToPosition { get; set; } = new();
+    public Vector2 goToPosition = new();
 
     protected virtual void Awake()
     {

@@ -27,10 +27,6 @@ public class BlackHatGuyInteractions : InteractionsList
 
         InteractionEnded.AddListener(EventCheck);
     }
-    void AddInteraction(List<string> interactionTexts, List<bool> isPlayerText)
-    {
-        Interactions.Add(new(interactionTexts, isPlayerText));
-    }
 
     public override Interaction GetActiveInteraction()
     {

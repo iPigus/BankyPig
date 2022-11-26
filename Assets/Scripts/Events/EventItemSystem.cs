@@ -6,6 +6,11 @@ public class EventItemSystem : MonoBehaviour
 {
     public static Dictionary<string, EventItem> EventsList = new();
 
+    private void Awake()
+    {
+        EventsList = new();
+    }
+
     public static void ClearEventList() => EventsList = new();
     public static void InvokeEvent(string eventName)
     {

@@ -9,11 +9,13 @@ public class DoorsEvent : EventItem
     Sprite ClosedDoors;
     [SerializeField] Collider2D DoorCollider;
 
-    public override string EventName => "DoorOpening0";
+    [SerializeField] string eventName; 
 
-    public override void Awake()
+    public override string EventName => eventName.Length == 0 ? "default name" : eventName;
+
+    public override void Start()
     {
-        base.Awake();
+        base.Start();
 
         ClosedDoors = Doors.sprite;
     }

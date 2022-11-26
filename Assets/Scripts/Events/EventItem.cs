@@ -8,7 +8,7 @@ public abstract class EventItem : MonoBehaviour
     public abstract string EventName { get; }
     public abstract void Event();
 
-    public virtual void Awake()
+    public virtual void Start()
     {
         AddToEventList();   
     }

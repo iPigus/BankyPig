@@ -11,4 +11,9 @@ public abstract class InteractionsList : MonoBehaviour
     public abstract int GetActiveInteractionIndex();
 
     public abstract UnityEvent InteractionEnded { get; set; }
+
+    public virtual void AddInteraction(List<string> interactionTexts, List<bool> isPlayerText)
+    {
+        Interactions.Add(new(interactionTexts, isPlayerText));
+    }
 }

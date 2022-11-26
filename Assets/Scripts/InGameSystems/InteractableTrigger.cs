@@ -49,6 +49,20 @@ public class InteractableTrigger : MonoBehaviour
         }
     }
 
+    public void UpdatePlayerInteraction()
+    {
+        if (PlayerMovement.Singleton.gameObject.TryGetComponent(out PlayerInteractions playerInteractions))
+        {
+            playerInteractions.interactionToChose = interaction;
+            playerInteractions.activeInteractionList = interactions;
+            PromptSystem.SwitchPromptState(true, "Interact");
+        }
+        else
+        {
+            Debug.LogError("Player doesn't have PlayerInteractions!");
+        }
+    }
+
     void CheckIfHasTrigger()
     {
 #if UNITY_EDITOR

@@ -59,6 +59,8 @@ public class DeadSystem : MonoBehaviour
     }
     void Confirm()
     {
+        if (!isDeadUIactive) return; 
+
         switch (activeRow) 
         {
             case 0: TryAgain(); break;

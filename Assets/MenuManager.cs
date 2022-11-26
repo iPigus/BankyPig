@@ -34,7 +34,7 @@ public class MenuManager : MonoBehaviour
 
     void Confirm()
     {
-        if (!isMenuLoaded) return;
+        if (!isMenuLoaded && SceneManager.GetActiveScene().buildIndex != 0) return;
 
         LoadGame();
     }
@@ -62,8 +62,10 @@ public class MenuManager : MonoBehaviour
 
         for (int i = 0; i < framesToCut; i++)
         {
-            Camera.main.orthographicSize -= cameraZoomChange / framesToCut;
-            Camera.main.transform.position -= move / framesToCut;
+            float x = (i + 1) / framesToCut;
+
+            Camera.main.orthographicSize -= cameraZoomChange / framesToCut * Mathf.Sqrt(Mathf.Sin(x));
+            Camera.main.transform.position -= move / framesToCut * Mathf.Sqrt(Mathf.Cos(x));
 
             yield return new WaitForFixedUpdate();
         }

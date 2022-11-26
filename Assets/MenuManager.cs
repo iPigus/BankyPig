@@ -48,7 +48,7 @@ public class MenuManager : MonoBehaviour
     }
 
     Vector2 positionToZoomIn => new(-6.6f, 25f);
-    float cameraSizeToZoomIn => 15f;
+    float cameraSizeToZoomIn => 12f;
 
     IEnumerator ZoomingIn()
     {
@@ -60,7 +60,7 @@ public class MenuManager : MonoBehaviour
         Vector3 move = startingPosition - positionToZoomIn;
         float cameraZoomChange = startingCameraZoom - cameraSizeToZoomIn;
 
-        for (int i = 0; i < framesToCut; i++)
+        for (int i = 0; i <= framesToCut; i++)
         {
             float x = (i + 1) / framesToCut;
 

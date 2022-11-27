@@ -16,12 +16,19 @@ public class SamuraiInteractions : InteractionsList
         true,false,true,false,false,true,false,
         true,false,true,true,false,true,false,true};
 
+    List<string> interactionTexts1 = new(){ "Have you brought that ancient sword?", "nope", "so what are looking for in here?","...idk see ya"
+    };
+    List<bool> isPlayerText1 = new List<bool>() { false,true,false,true};
+
     private void Awake()
     {
         AddInteraction(interactionTexts0, isPlayerText0);
+        AddInteraction(interactionTexts1, isPlayerText1);
 
         InteractionEnded.AddListener(EventCheck);
     }
+
+    bool interaction0ended = false;
 
     public override Interaction GetActiveInteraction()
     {
@@ -29,6 +36,8 @@ public class SamuraiInteractions : InteractionsList
     }
     public override int GetActiveInteractionIndex()
     {
+        if (interaction0ended) return 1;
+
         return 0;
     }
 
@@ -38,6 +47,7 @@ public class SamuraiInteractions : InteractionsList
 
         switch (GetActiveInteractionIndex())
         {
+            case 0: interaction0ended = true; break;
             default: break;
         }
 

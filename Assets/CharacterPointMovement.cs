@@ -30,7 +30,9 @@ public class CharacterPointMovement : MonoBehaviour
         if (!shouldPushOnMovement) ChangeCollidersOnMoveOrStay(isStopped);
 
         if (!isStopped)
-            Move();
+            PassMovementToAnimator(Move().normalized);
+        else
+            PassMovementToAnimator(Vector2.zero);
     }
 
     bool CheckIfPointReached()
@@ -95,12 +97,32 @@ public class CharacterPointMovement : MonoBehaviour
         collieders.Where(x => !x.isTrigger).ToList().ForEach(x => x.enabled = shouldPush);
     }
 
-    void Move()
+    Vector2 Move()
     {
-        if(points.Count == 0) return;
+        if(points.Count == 0) return Vector2.zero;
 
-        Vector2 movement = (rigidbody.position - points[activeIndex]).normalized * Time.deltaTime * movementSpeed;
+        Vector2 movement = (points[activeIndex] - rigidbody.position).normalized * Time.deltaTime * movementSpeed;
 
-        rigidbody.MovePosition(rigidbody.position - movement);
+        rigidbody.MovePosition(rigidbody.position + movement);
+
+        CheckForCharacterFlip(movement.x);
+
+        return movement;
+    }
+
+    void PassMovementToAnimator(Vector2 movement)
+    {
+        if (animator == null) return;
+
+        animator.SetBool("isMoving", movement.magnitude > .5f);
+        animator.SetFloat("MoveX", movement.x);
+        animator.SetFloat("MoveY", movement.y);
+    }
+
+    protected void CheckForCharacterFlip(float moveSpeed)
+    {
+        if (moveSpeed * transform.localScale.x > 0f || moveSpeed == 0) return;
+
+        transform.localScale = new(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
     }
 }

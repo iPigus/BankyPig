@@ -11,6 +11,7 @@ public class PlayerInteractions : MonoBehaviour
     public static bool isInInteraction => InteractionSystem.Singleton.isInteractionActive;
     public Interaction interactionToChose { get; set; }
     public GameObject interactionCharacter { get; set; }
+    public Sprite interactionCharacterSprite { get; set; }
     public InteractionsList activeInteractionList { get; set; }
 
     public Controls Controls { get; set; }
@@ -30,7 +31,7 @@ public class PlayerInteractions : MonoBehaviour
     {
         if (!isInterationAvailable || isInInteraction || PlayerManager.isInAnySystem) return;
 
-        InteractionSystem.Singleton.LoadInteraction(interactionToChose, interactionCharacter);
+        InteractionSystem.Singleton.LoadInteraction(interactionToChose, interactionCharacter, interactionCharacterSprite);
     }
 
     public void InvokeInteractionEndEvent()

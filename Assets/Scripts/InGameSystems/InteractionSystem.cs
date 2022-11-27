@@ -64,13 +64,13 @@ public class InteractionSystem : MonoBehaviour
     #endregion 
 
     #region Handling Messages
-    public void LoadInteraction(Interaction interaction, GameObject interactionCharacter)
+    public void LoadInteraction(Interaction interaction, GameObject interactionCharacter, Sprite characterSprite)
     {
         if (!interaction) { Debug.LogError("interaction is null!"); return; }
         
         if (interaction.texts.Count == 0) { Debug.LogError("interaction is doesn't contain texts!"); return; }
 
-        characterImage.sprite = interactionCharacter.GetComponent<SpriteRenderer>().sprite;
+        characterImage.sprite = characterSprite;
 
         CharacterNameText.text = interactionCharacter.name;
 

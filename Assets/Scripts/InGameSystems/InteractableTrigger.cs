@@ -9,10 +9,14 @@ public class InteractableTrigger : MonoBehaviour
 
     InteractionsList interactions;
 
+    Sprite baseCharacterSprite;
+
     public bool isInteractable { get; private set; } = true;
 
     private void Awake()
     {
+        baseCharacterSprite = GetComponent<SpriteRenderer>().sprite;
+
         CheckIfHasTrigger();
 
         interactions = GetComponent<InteractionsList>();
@@ -27,6 +31,7 @@ public class InteractableTrigger : MonoBehaviour
             playerInteractions.interactionToChose = interaction;
             playerInteractions.activeInteractionList = interactions;
             playerInteractions.interactionCharacter = this.gameObject;
+            playerInteractions.interactionCharacterSprite = baseCharacterSprite;
             PromptSystem.SwitchPromptState(true, "Interact");
         }
         else

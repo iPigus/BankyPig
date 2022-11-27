@@ -12,6 +12,7 @@ public class CharacterPointMovement : MonoBehaviour
     [SerializeField] List<Vector2> points = new();
     [Range(.1f, 10f)] public float movementSpeed = 1f;
     [Range(0f, 10f)] public float stopTime = 1f;
+    [Range(0f, 1f)] public float stopTimeRandomness = .5f;
     public bool shouldLoop = false;
     public bool shouldPushOnMovement = false;
     int activeIndex = 0;
@@ -85,7 +86,7 @@ public class CharacterPointMovement : MonoBehaviour
     {
         isStopped = true;
 
-        yield return new WaitForSeconds(stopTime);
+        yield return new WaitForSeconds(stopTime + Random.Range(-stopTimeRandomness, stopTimeRandomness));
 
         isStopped = false;
     }

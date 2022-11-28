@@ -19,16 +19,13 @@ public class CollectableItem : MonoBehaviour
 
         if (PlayerInventory.doesInventoryContainItem(ItemId)) return;
 
-        PlayerInventory.AddItemToInventory(ItemId);
-        NewItemSystem.Singleton.ShowNewItem(ItemId);
-
-        Destroy(gameObject);
+        PlayerInventory.ShowPickable(gameObject, ItemId);
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (!collision.CompareTag("Player")) return;  
         
-
+        PlayerInventory.HidePickable(gameObject, ItemId);
     }
 
     #region Checking 

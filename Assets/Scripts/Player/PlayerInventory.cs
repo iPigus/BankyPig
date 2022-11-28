@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -39,6 +40,30 @@ public class PlayerInventory : MonoBehaviour
     {
         PromptSystem.SwitchPromptState(isOpenable, "switch");
     }
+
+    #region PickUp Systems 
+
+    public static void ShowPickable(GameObject objectToPickUp, int itemId)
+    {
+        
+    }
+
+    public static void HidePickable(GameObject objectToPickUp, int itemId)
+    {
+
+    }
+
+    public static void PickUpItem(GameObject objectToPickUp, int itemId)
+    {
+        PlayerInventory.AddItemToInventory(itemId);
+        NewItemSystem.Singleton.ShowNewItem(itemId);
+
+        Destroy(objectToPickUp);
+    }
+
+    #endregion
+
+    #region ItemSystem (+end of script)
 
     public static void AddWeapon()
     {
@@ -161,3 +186,5 @@ public static class AllItems
         }
     }
 }
+
+#endregion

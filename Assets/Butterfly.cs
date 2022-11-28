@@ -29,7 +29,7 @@ public class Butterfly : MonoBehaviour
 
         rigidbody.MovePosition(new(rigidbody.position.x, rigidbody.position.y + movement));
 
-        if (movement > movementYrange) isMovingDown = false;
-        if (-movement < -movementYrange) isMovingDown = true;
+        if (movementY > movementYrange) isMovingDown = false;
+        if (-movementY < -movementYrange) isMovingDown = true;
     }
 }

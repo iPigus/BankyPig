@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9b4a0b4509191b4ca8ae43b597930e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OffsetY: 10
+  OffsetY: 36
   isTileSet: 0
 --- !u!58 &1160375788
 CircleCollider2D:

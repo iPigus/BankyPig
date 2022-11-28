@@ -188,6 +188,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3917280671992856225, guid: 5db20ed69d367284abffd06fcc56862e, type: 3}
+      propertyPath: Prompts.Array.data[2]
+      value: 
+      objectReference: {fileID: 4323378852882868283}
     - target: {fileID: 3917280671992856226, guid: 5db20ed69d367284abffd06fcc56862e, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -252,11 +256,20 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6441852183637625599, guid: 5db20ed69d367284abffd06fcc56862e, type: 3}
+      propertyPath: m_text
+      value: Switch
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5db20ed69d367284abffd06fcc56862e, type: 3}
 --- !u!4 &274047507769077933 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3917280671992856226, guid: 5db20ed69d367284abffd06fcc56862e, type: 3}
+  m_PrefabInstance: {fileID: 3859979354537397775}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4323378852882868283 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1040011472422299188, guid: 5db20ed69d367284abffd06fcc56862e, type: 3}
   m_PrefabInstance: {fileID: 3859979354537397775}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5313979717030147645

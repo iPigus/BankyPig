@@ -18,6 +18,7 @@ public class PromptSystem : MonoBehaviour
 
     GameObject InteractionPrompt { get; set; }
     GameObject SwitchPrompt { get; set; }
+    GameObject PickUpPrompt { get; set; }
 
     Dictionary<string, GameObject> PromptDictionary { get; set; } = new();
 
@@ -36,6 +37,12 @@ public class PromptSystem : MonoBehaviour
             SwitchPrompt = Prompts[1];
             PromptDictionary.Add("switch", SwitchPrompt);
             SwitchPrompt.SetActive(false);
+        }
+        if (Prompts.Count >= 3)
+        {
+            PickUpPrompt = Prompts[2];
+            PromptDictionary.Add("pickup", PickUpPrompt);
+            PickUpPrompt.SetActive(false);
         }
     }
 

@@ -33,6 +33,8 @@ public class PlayerInventory : MonoBehaviour
         controls.Player.ShowInventory.performed += ctx => OpenInventory();
         controls.Player.ShowInventory.canceled += ctx => CloseInventory();
 
+        controls.Player.Interact.performed += ctx => PickUpItem();
+
         controls.Player.Movement.performed += ctx => MoveInInventory(ctx.ReadValue<Vector2>().x);
     }
 
@@ -43,22 +45,37 @@ public class PlayerInventory : MonoBehaviour
 
     #region PickUp Systems 
 
+    static GameObject pickableItem = null;
+    static int pickableItemId;
+
     public static void ShowPickable(GameObject objectToPickUp, int itemId)
     {
+        if (pickableItem != null) return;
         
+        pickableItem = objectToPickUp;
+        pickableItemId = itemId;
+
+        PromptSystem.SwitchPromptState(true, "pickup");
     }
 
     public static void HidePickable(GameObject objectToPickUp, int itemId)
     {
+        if(pickableItem != objectToPickUp || itemId != pickableItemId) return;
 
+        pickableItem = null;
+        pickableItemId = 0;
+
+        PromptSystem.SwitchPromptState(false, "pickup");
     }
 
-    public static void PickUpItem(GameObject objectToPickUp, int itemId)
+    public void PickUpItem()
     {
-        PlayerInventory.AddItemToInventory(itemId);
-        NewItemSystem.Singleton.ShowNewItem(itemId);
+        if(pickableItem == null) return;
 
-        Destroy(objectToPickUp);
+        PlayerInventory.AddItemToInventory(pickableItemId);
+        NewItemSystem.Singleton.ShowNewItem(pickableItemId);
+
+        Destroy(pickableItem);
     }
 
     #endregion

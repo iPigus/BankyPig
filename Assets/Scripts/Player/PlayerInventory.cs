@@ -72,7 +72,7 @@ public class PlayerInventory : MonoBehaviour
         if(pickableItem == null) return;
 
         PlayerInventory.AddItemToInventory(pickableItemId);
-        NewItemSystem.Singleton.ShowNewItem(pickableItemId);
+        NewItemSystem.Singleton.ShowNewItem(pickableItemId);        
 
         Destroy(pickableItem);
     }

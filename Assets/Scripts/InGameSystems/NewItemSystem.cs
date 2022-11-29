@@ -32,12 +32,14 @@ public class NewItemSystem : MonoBehaviour
         StopShowingItem();
     }
 
-
+                                                                         
     float timeBeforeShowingItem = 1f;
     public void ShowNewItem(int itemId) => ShowNewItem(AllItems.GetItemFromId(itemId));
     public void ShowNewItem(Item item) => ShowNewItem(item.Sprite, item.Name, item.Describtion, item.Id, item.IsEquippable);
     public void ShowNewItem(Sprite sprite, string name, string describtion, int id, bool isEquippable)
     {
+        isLeaveable = false;
+
         NewItemUI.transform.position = PlayerMovement.Singleton.transform.position;
 
         NewItemImage.sprite = sprite;
@@ -77,12 +79,14 @@ public class NewItemSystem : MonoBehaviour
     }
     void TryToLeave()
     {
-        if (!NewItemUI.activeSelf) return;
+        if (!NewItemUI.activeSelf) return; 
 
         if (!isLeaveable) return;
         
         StopShowingItem();
     }
+
+
 
     #region Input Stuff
     private void OnEnable()

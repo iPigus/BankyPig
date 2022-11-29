@@ -48,12 +48,15 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 83b8f797a25a83b4498d4b34e6902304, type: 3}
   - {fileID: 1898918044, guid: 7f7800ce8f4a4264a8e6af76af7cd629, type: 3}
   - {fileID: 21300000, guid: ea9263d8f5c887547af81a602e0484d1, type: 3}
+  - {fileID: -870211317, guid: 932e9338f1b66e2459aaa18c4414dcd2, type: 3}
   itemNames:
   - Sword
   - Key
   - Bone
+  - Weird Dog
   itemDescribtions:
   - Basic Sword
   - Some key
   - Why would I need that?
-  isItemEquippable: 010000
+  - That's weird...
+  isItemEquippable: 01000000

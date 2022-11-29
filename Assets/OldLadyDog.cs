@@ -37,6 +37,8 @@ public class OldLadyDog : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
+        gameObject.AddComponent<InteractableTrigger>();
+
         animator.SetBool("isMoving", false);
     }
 

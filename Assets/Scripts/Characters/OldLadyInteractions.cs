@@ -17,10 +17,20 @@ public class OldLadyInteractions : InteractionsList
     };
     List<bool> isPlayerText1 = new List<bool>() { false, true, false};
 
+    List<string> interactionTexts2 = new(){ "Have you find my dog young man?", "Not yet", "Hmm...        I'll go look for him then"
+    };
+    List<bool> isPlayerText2 = new List<bool>() { false, true, false };
+
+    List<string> interactionTexts3 = new(){ "Have you find my dog young man?", "Not yet", "Hmm...        I'll go look for him then"
+    };
+    List<bool> isPlayerText3 = new List<bool>() { false, true, false };
+
     private void Awake()
     {
         AddInteraction(interactionTexts0, isPlayerText0);
         AddInteraction(interactionTexts1, isPlayerText1);
+        AddInteraction(interactionTexts2, isPlayerText2);
+        AddInteraction(interactionTexts3, isPlayerText3);
 
         InteractionEnded.AddListener(EventCheck);
     }

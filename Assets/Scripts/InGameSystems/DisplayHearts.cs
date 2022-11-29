@@ -15,7 +15,7 @@ public class DisplayHearts : MonoBehaviour
 
     PlayerHealth playerHealth => PlayerHealth.Singleton;
 
-    private void Awake()
+    private void Start()
     {
         for (int i = 0; i < Mathf.RoundToInt(playerHealth.MaxHealth / 2); i++)
         {

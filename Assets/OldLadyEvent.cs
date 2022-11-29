@@ -6,6 +6,11 @@ public class OldLadyEvent : EventItem
 {
     public override string EventName => "OldLadyDog";
 
+    public override void Start()
+    {
+        base.Start();
+    }
+
     public override void Event()
     {
         PlayerInventory.RemoveItemFromInventory(3);

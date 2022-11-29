@@ -6,6 +6,11 @@ public class DogEvent : EventItem
 {
     public override string EventName => "PickUpDog0";
 
+    public override void Start()
+    {
+        base.Start();
+    }
+
     public override void Event()
     {
         PlayerInventory.RemoveItemFromInventory(2);

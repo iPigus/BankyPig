@@ -17,9 +17,9 @@ public class OldLadyInteractions : InteractionsList
     };
     List<bool> isPlayerText1 = new List<bool>() { false, true, false};
 
-    List<string> interactionTexts2 = new(){ "Have you find my dog young man?", "I guess so", "hmm...", "my eyes are as good as they once were", "...", "hmm...", "???", "okay...", "yes this dog is mine, thank you a lot for bringing him back to me", "common w", "what?", "...", "anyway here's the reward for brining the dog to me", "it's some kind of key", "...", "i don't really know what it may be used for...", "but you may find some usage for it young man", "   ...welp"
+    List<string> interactionTexts2 = new(){ "Have you find my dog young man?", "I guess so", "hmm...", "my eyes aren't as good as they once were", "...", "hmm...", "???", "okay...", "yes this dog is mine, thank you a lot for bringing him back to me", "common w", "what?", "...", "anyway here's the reward for brining the dog to me", "it's some kind of key", "...", "i don't really know what it may be used for...", "but you may find some usage for it young man", "   ...welp"
     };
-    List<bool> isPlayerText2 = new List<bool>() { false, true, false, false, false, true, false, true, false, false, true, false, true, false, false, true, false, false, true };
+    List<bool> isPlayerText2 = new List<bool>() { false, true, false, false, false, true, false, true, false, false, true, false, false, false, true, false, false, true };
 
     List<string> interactionTexts3 = new(){ "thank you young man again for bringing my dog back, i've been missing him for quite some time", "sure"
     };

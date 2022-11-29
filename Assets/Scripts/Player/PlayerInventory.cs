@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -123,6 +122,8 @@ public class PlayerInventory : MonoBehaviour
     void CheckIfActiveItemIsEquippable()
     {
         if (Items.Count == 0) return;
+
+        if(activeItem >= Items.Count) activeItem = Items.Count - 1;
 
         if (Items[activeItem].IsEquippable || !Items.Where(x => x.IsEquippable).Any()) return;
 

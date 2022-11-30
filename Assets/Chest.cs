@@ -37,11 +37,11 @@ public class Chest : MonoBehaviour
 
         if (Singleton.isLocked)
         {
-            if (PlayerInventory.doesInventoryContainItem(Singleton.keyItemId)) ChestOpened();
+            if (PlayerInventory.doesInventoryContainItem(Singleton.keyItemId)) Singleton.ChestOpened();
             else 
-                CannotOpenChest();
+                Singleton.CannotOpenChest();
         }
-        else ChestOpened();
+        else Singleton.ChestOpened();
     }
 
     void CannotOpenChest() // have to throw some error
@@ -57,37 +57,45 @@ public class Chest : MonoBehaviour
     {
         Chest[] chests = FindObjectsOfType<Chest>();
 
-        chests.Where(x => x.isActive).ToList().ForEach(x => x.DeactivateChest());
+        chests.Where(x => x.isActive && x != Singleton).ToList().ForEach(x => x.DeactivateChest());
     }
 
     void ActivateChest()
     {
         isActive = true;
+
+        PromptSystem.SwitchPromptState(true, "interact");
     }
     void DeactivateChest()
     {
         isActive = false;
+
+        PromptSystem.SwitchPromptState(false, "interact");
     }
 
     #endregion
 
     void ChestOpened() // new item system I guess
     {
+        haveChestBeenOpened = true;
+        DeactivateChest();
+
         Debug.LogError("Chest opened!");
 
-        if (shouldDeleteKeyItem) PlayerInventory.RemoveItemFromInventory(keyItemId);
+        if (shouldDeleteKeyItem && isLocked) PlayerInventory.RemoveItemFromInventory(keyItemId);
 
         NewItemSystem.Singleton.ShowNewItem(itemInChestId);
-        PlayerInventory.AddItemToInventory(itemInChestId);  
+        PlayerInventory.AddItemToInventory(itemInChestId);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (Singleton == null || !collision.CompareTag("Player")) return;
-
-        Singleton.ActivateChest();
+        if (!collision.CompareTag("Player") || haveChestBeenOpened) return;
 
         Singleton = this;
+
+        CheckForActiveChests();
+        Singleton.ActivateChest();
     }
     private void OnTriggerExit2D(Collider2D collision)
     {

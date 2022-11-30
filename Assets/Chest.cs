@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,9 @@ public class Chest : MonoBehaviour
     {
         controls = new();
 
+        animator = GetComponent<Animator>();
+        SetOpenedState();
+
         controls.Player.Interact.performed += ctx => TryOpenChest();
     }
 
@@ -30,6 +34,8 @@ public class Chest : MonoBehaviour
     public bool shouldDeleteKeyItem = true;
     public bool haveChestBeenOpened = false;
     public bool isActive { get; set; } = false;
+
+    Animator animator { get; set; }
 
     void TryOpenChest()
     {
@@ -75,6 +81,25 @@ public class Chest : MonoBehaviour
 
     #endregion
 
+    #region Chest Animations 
+    void TriggerAnimationOpen() => animator.SetTrigger("Open");
+    public void SetChestStateToOpened()
+    {
+        animator.SetBool("isOpened", true);
+    }
+    void SetOpenedState() => animator.SetBool("isOpened", haveChestBeenOpened);
+
+    void ChestAnimationOpened() // in singleton already
+    {
+        SetChestStateToOpened();
+
+        // normaly those stuff had been in the on trigger enter
+
+        ChestOpenedNewItem();
+    }
+
+    #endregion
+
     void ChestOpened() // new item system I guess
     {
         haveChestBeenOpened = true;
@@ -82,6 +107,10 @@ public class Chest : MonoBehaviour
 
         Debug.LogError("Chest opened!");
 
+        Singleton.TriggerAnimationOpen();
+    }
+    void ChestOpenedNewItem()
+    {
         if (shouldDeleteKeyItem && isLocked) PlayerInventory.RemoveItemFromInventory(keyItemId);
 
         NewItemSystem.Singleton.ShowNewItem(itemInChestId);

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Chest : MonoBehaviour
@@ -11,8 +12,6 @@ public class Chest : MonoBehaviour
         set
         {
             _Singleton = value;
-
-            UpdateActiveChest();
         }
     }
 
@@ -28,7 +27,9 @@ public class Chest : MonoBehaviour
     public bool isLocked = false;
     public int keyItemId = 0;
     public int itemInChestId = 0;
+    public bool shouldDeleteKeyItem = true;
     public bool haveChestBeenOpened = false;
+    public bool isActive { get; set; } = false;
 
     void TryOpenChest()
     {
@@ -45,27 +46,56 @@ public class Chest : MonoBehaviour
 
     void CannotOpenChest() // have to throw some error
     {
+        Debug.LogError("Cannot open chest!");
+
 
     }
+
+    #region Chest Activation
+
+    public static void CheckForActiveChests()
+    {
+        Chest[] chests = FindObjectsOfType<Chest>();
+
+        chests.Where(x => x.isActive).ToList().ForEach(x => x.DeactivateChest());
+    }
+
+    void ActivateChest()
+    {
+        isActive = true;
+    }
+    void DeactivateChest()
+    {
+        isActive = false;
+    }
+
+    #endregion
+
     void ChestOpened() // new item system I guess
     {
+        Debug.LogError("Chest opened!");
 
-    }
+        if (shouldDeleteKeyItem) PlayerInventory.RemoveItemFromInventory(keyItemId);
 
-    static void UpdateActiveChest()
-    {
-        
+        NewItemSystem.Singleton.ShowNewItem(itemInChestId);
+        PlayerInventory.AddItemToInventory(itemInChestId);  
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (Singleton != null || !collision.CompareTag("Player") || Singleton.haveChestBeenOpened) return;
+        if (Singleton == null || !collision.CompareTag("Player")) return;
+
+        Singleton.ActivateChest();
 
         Singleton = this;
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (Singleton == null) return;
+
         if (!Singleton.Equals(this) || !collision.CompareTag("Player")) return;
+
+        Singleton.DeactivateChest();
 
         Singleton = null;
     }

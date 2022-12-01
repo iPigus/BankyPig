@@ -108,7 +108,7 @@ public class Chest : MonoBehaviour
         Debug.LogError("Chest opened!");
 
         Singleton.TriggerAnimationOpen();
-    }
+    }                                                    
     void ChestOpenedNewItem()
     {
         if (shouldDeleteKeyItem && isLocked) PlayerInventory.RemoveItemFromInventory(keyItemId);

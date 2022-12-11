@@ -71,7 +71,7 @@ public class SettingsManager : MonoBehaviour
         controls.Player.Movement.performed += ctx => ResChange(ctx.ReadValue<Vector2>().x);
         controls.Player.Movement.canceled += ctx => SliderPerform(0);
         controls.Player.Confirm.performed += ctx => Select();
-        controls.Player.Back.performed += ctx => Back();
+        controls.Player.Escape.performed += ctx => Back();
 
         LoadValues();
         UpdateSliderTextValues();

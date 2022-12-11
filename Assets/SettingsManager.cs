@@ -26,19 +26,15 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI ActualResolutionText;
     [SerializeField] TextMeshProUGUI MusicText;
     [SerializeField] TextMeshProUGUI SoundsText;
-    [SerializeField] TextMeshProUGUI ScreenShakeText;
     [SerializeField] TextMeshProUGUI BackText;
 
     [SerializeField] Graphic MusicSliderFill;
     [SerializeField] Graphic MusicSliderHandle;
     [SerializeField] Graphic SoundsSliderFill;
     [SerializeField] Graphic SoundsSliderHandle;
-    [SerializeField] Graphic ScreenShakeSliderFill;
-    [SerializeField] Graphic ScreenShakeSliderHandle;
 
     Slider MusicSlider;
     Slider SoundsSlider;
-    Slider ScreenShakeSlider;
 
 
     int _SelectedRow = 0;
@@ -47,7 +43,7 @@ public class SettingsManager : MonoBehaviour
         get => _SelectedRow;
         set
         {
-            if (!(value >= -1 && value < 5) || value == _SelectedRow) return;
+            if (!(value >= -1 && value < 4) || value == _SelectedRow) return;
 
             _SelectedRow = value;
             UpdateActiveRows();
@@ -64,7 +60,6 @@ public class SettingsManager : MonoBehaviour
     {
         MusicSlider = MusicText.GetComponentInChildren<Slider>();
         SoundsSlider = SoundsText.GetComponentInChildren<Slider>();
-        ScreenShakeSlider = ScreenShakeText.GetComponentInChildren<Slider>();
 
         controls.Player.Movement.performed += ctx => Move(ctx.ReadValue<Vector2>().y);
         controls.Player.Movement.performed += ctx => SliderPerform(ctx.ReadValue<Vector2>().x);
@@ -115,7 +110,6 @@ public class SettingsManager : MonoBehaviour
     {
         MusicText.text = "Music : " + Mathf.Round(100 * MusicSlider.value / (MusicSlider.maxValue - MusicSlider.minValue)).ToString();
         SoundsText.text = "Sounds : " + Mathf.Round(100 * SoundsSlider.value / (SoundsSlider.maxValue - SoundsSlider.minValue)).ToString();
-        ScreenShakeText.text = "Screen Shake :<size=46> " + Mathf.Round(100 * ScreenShakeSlider.value / (ScreenShakeSlider.maxValue)).ToString();
     }
 
     void SliderPerform(float move)
@@ -137,7 +131,6 @@ public class SettingsManager : MonoBehaviour
         {
             case 2: MusicSlider.value += Time.deltaTime * Mathf.Round(movementX) * .7f; break;
             case 3: SoundsSlider.value += Time.deltaTime * Mathf.Round(movementX) * .7f; break;
-            case 4: ScreenShakeSlider.value += Time.deltaTime * Mathf.Round(movementX) * .7f; break;
             default: break;
         }
     }
@@ -164,10 +157,6 @@ public class SettingsManager : MonoBehaviour
         if (SelectedRow == 3) Highlight(SoundsText); else LowLight(SoundsText);
         if (SelectedRow == 3) Highlight(SoundsSliderHandle); else LowLight(SoundsSliderHandle);
         if (SelectedRow == 3) Highlight(SoundsSliderFill); else LowLight(SoundsSliderFill);
-
-        if (SelectedRow == 4) Highlight(ScreenShakeText); else LowLight(ScreenShakeText);
-        if (SelectedRow == 4) Highlight(ScreenShakeSliderFill); else LowLight(ScreenShakeSliderFill);
-        if (SelectedRow == 4) Highlight(ScreenShakeSliderHandle); else LowLight(ScreenShakeSliderHandle);
     }
 
     #endregion

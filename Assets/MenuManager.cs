@@ -1,82 +1,171 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-    public static MenuManager Singleton { get; private set; }
+    [Header("Displaying Settings")]
+    public Color SelectedColor = Color.yellow;
+    public Color DeselectedColor = Color.white;
+    public float SelectedFontSize = 48;
+    public float DeselectedFontSize = 42f;
+
+    [Header("Activation Parts")]
+
+    [SerializeField] GameObject SettingsManager;
+    [SerializeField] GameObject MultiplayerManager;
+    [SerializeField] GameObject SettingsCanvas;
+    [SerializeField] GameObject MultiplayerCanvas;
+    [SerializeField] GameObject MenuCanvas;
+
+    [Header("Menu Parts")]
+    [SerializeField] TextMeshProUGUI EnterHubText;
+    [SerializeField] TextMeshProUGUI MultiplayerText;
+    [SerializeField] TextMeshProUGUI TutorialText;
+    [SerializeField] TextMeshProUGUI SettingsText;
+
+    int _SelectedRow = 0;
+    int SelectedRow
+    {
+        get => _SelectedRow;
+        set
+        {
+            if (!(value >= 0 && value < 4) || value == _SelectedRow) return;
+
+            _SelectedRow = value;
+            UpdateActiveRows();
+        }
+    }
 
     Controls controls;
 
-    [SerializeField] GameObject MainMenu;
-    [SerializeField] GameObject PressAnyKeyText;
-
-    bool isMenuLoaded = false;
-
     private void Awake()
     {
-        Singleton = this;
         controls = new();
 
-        Time.timeScale = 1.0f;
-
-        controls.Player.Confirm.performed += ctx => Confirm();
+        Time.timeScale = 1;
+    }
+    private void Start()
+    {
+        controls.Player.Movement.performed += ctx => Move(ctx.ReadValue<Vector2>().y);
+        controls.Player.Confirm.performed += ctx => Select();
     }
 
-    private void Update()
+    void Move(float movementY)
     {
-        if (Input.anyKeyDown && !isMenuLoaded)
+        if (Mathf.Abs(movementY) < .5f) return;
+
+        if (movementY < 0) SelectedRow++;
+        else SelectedRow--;
+    }
+    void Select()
+    {
+        switch (SelectedRow)
         {
-            LoadMenu();
+            case 0: EnterHub(); break;
+            case 1: EnterMultiplayer(); break;
+            case 2: EnterTutorial(); break;
+            case 3: EnterSettings(); break;
         }
     }
 
-    void Confirm()
+    void UpdateActiveRows()
     {
-        if (!isMenuLoaded && SceneManager.GetActiveScene().buildIndex != 0) return;
-
-        LoadGame();
+        if (SelectedRow == 0) Highlight(EnterHubText); else LowLight(EnterHubText);
+        if (SelectedRow == 1) Highlight(MultiplayerText); else LowLight(MultiplayerText);
+        if (SelectedRow == 2) Highlight(TutorialText); else LowLight(TutorialText);
+        if (SelectedRow == 3) Highlight(SettingsText); else LowLight(SettingsText);
     }
 
-    void LoadMenu()
-    {
-        PressAnyKeyText.SetActive(false);
-        MainMenu.SetActive(true);
+    #region Enter Functions
 
-        StartCoroutine(ZoomingIn());
+    public void EnterHub()
+    {
+        StartCoroutine(LoadScene(1));
+    }
+    public void EnterMultiplayer()
+    {
+        MultiplayerCanvas.SetActive(true);
+        MultiplayerManager.SetActive(true);
+        MenuCanvas.SetActive(false);
+        this.gameObject.SetActive(false);
+    }
+    public void EnterTutorial()
+    {
+        StartCoroutine(LoadScene(4));
     }
 
-    Vector2 positionToZoomIn => new(-6.6f, 25f);
-    float cameraSizeToZoomIn => 12f;
-
-    IEnumerator ZoomingIn()
+    IEnumerator LoadScene(int scene)
     {
-        float startingCameraZoom = Camera.main.orthographicSize;
-        Vector2 startingPosition = Camera.main.transform.position;
+        //SceneTransition.PlayLeavingAnimation();
+        //yield return new WaitForSecondsRealtime(1f);
 
-        const float framesToCut = 20;
+        yield return null; Debug.Log("ANIMATION TO PLACE IN HERE!");
+        SceneManager.LoadScene(scene);
+    }
+    public void EnterSettings()
+    {
+        SettingsManager.SetActive(true);
+        SettingsCanvas.SetActive(true);
+        MenuCanvas.SetActive(false);
+        this.gameObject.SetActive(false);
+    }
 
-        Vector3 move = startingPosition - positionToZoomIn;
-        float cameraZoomChange = startingCameraZoom - cameraSizeToZoomIn;
+    #endregion
 
-        for (int i = 0; i <= framesToCut; i++)
+    #region Transitions between Selected and Deselected
+
+    List<TextMeshProUGUI> inHighlight = new();
+    List<TextMeshProUGUI> inLowlight = new();
+
+    void Highlight(TextMeshProUGUI text)
+    {
+        if (text.color == SelectedColor && text.fontSize == SelectedFontSize) return;
+        if (inHighlight.Contains(text)) return;
+
+        inHighlight.Add(text);
+
+        if (inLowlight.Contains(text)) inLowlight.Remove(text);
+
+        StartCoroutine(ColorAndFontTransition(text, SelectedColor, SelectedFontSize));
+    }
+
+    void LowLight(TextMeshProUGUI text)
+    {
+        if (text.color == DeselectedColor && text.fontSize == DeselectedFontSize) return;
+        if (inLowlight.Contains(text)) return;
+
+        inLowlight.Add(text);
+
+        if (inHighlight.Contains(text)) inHighlight.Remove(text);
+
+        StartCoroutine(ColorAndFontTransition(text, DeselectedColor, DeselectedFontSize));
+    }
+
+    IEnumerator ColorAndFontTransition(TextMeshProUGUI text, Color colorToTransition, float fontSizeToTransition)
+    {
+        if (text.color == colorToTransition && text.fontSize == fontSizeToTransition) yield break;
+
+        Color startingColor = text.color;
+        float startingFontSize = text.fontSize;
+
+        for (float i = 1; i <= 10; i++)
         {
-            float x = (i + 1) / framesToCut;
+            yield return new WaitForSecondsRealtime(.02f);
 
-            Camera.main.orthographicSize -= cameraZoomChange / framesToCut * Mathf.Sqrt(Mathf.Sin(x));
-            Camera.main.transform.position -= move / framesToCut * Mathf.Sqrt(Mathf.Cos(x));
-
-            yield return new WaitForFixedUpdate();
+            text.color = startingColor * ((10 - i) / 10) + colorToTransition * i / 10;
+            text.fontSize = startingFontSize * ((10 - i) / 10) + fontSizeToTransition * i / 10;
         }
 
-        isMenuLoaded = true;
+        if (inHighlight.Contains(text)) inHighlight.Remove(text);
+        else if (inLowlight.Contains(text)) inLowlight.Remove(text);
     }
 
-    void LoadGame()
-    {
-        SceneManager.LoadScene(1);
-    }
+    #endregion
+
+    #region Input stuff 
 
     private void OnEnable()
     {
@@ -86,4 +175,6 @@ public class MenuManager : MonoBehaviour
     {
         controls.Disable();
     }
+
+    #endregion 
 }

@@ -15,15 +15,11 @@ public class MenuManager : MonoBehaviour
     [Header("Activation Parts")]
 
     [SerializeField] GameObject SettingsManager;
-    [SerializeField] GameObject MultiplayerManager;
     [SerializeField] GameObject SettingsCanvas;
-    [SerializeField] GameObject MultiplayerCanvas;
     [SerializeField] GameObject MenuCanvas;
 
     [Header("Menu Parts")]
-    [SerializeField] TextMeshProUGUI EnterHubText;
-    [SerializeField] TextMeshProUGUI MultiplayerText;
-    [SerializeField] TextMeshProUGUI TutorialText;
+    [SerializeField] TextMeshProUGUI EnterGameText;
     [SerializeField] TextMeshProUGUI SettingsText;
 
     int _SelectedRow = 0;
@@ -32,7 +28,7 @@ public class MenuManager : MonoBehaviour
         get => _SelectedRow;
         set
         {
-            if (!(value >= 0 && value < 4) || value == _SelectedRow) return;
+            if (!(value >= 0 && value < 2) || value == _SelectedRow) return;
 
             _SelectedRow = value;
             UpdateActiveRows();
@@ -64,37 +60,22 @@ public class MenuManager : MonoBehaviour
     {
         switch (SelectedRow)
         {
-            case 0: EnterHub(); break;
-            case 1: EnterMultiplayer(); break;
-            case 2: EnterTutorial(); break;
-            case 3: EnterSettings(); break;
+            case 0: EnterGame(); break;
+            case 1: EnterSettings(); break;
         }
     }
 
     void UpdateActiveRows()
     {
-        if (SelectedRow == 0) Highlight(EnterHubText); else LowLight(EnterHubText);
-        if (SelectedRow == 1) Highlight(MultiplayerText); else LowLight(MultiplayerText);
-        if (SelectedRow == 2) Highlight(TutorialText); else LowLight(TutorialText);
-        if (SelectedRow == 3) Highlight(SettingsText); else LowLight(SettingsText);
+        if (SelectedRow == 0) Highlight(EnterGameText); else LowLight(EnterGameText);
+        if (SelectedRow == 1) Highlight(SettingsText); else LowLight(SettingsText);
     }
 
     #region Enter Functions
 
-    public void EnterHub()
+    public void EnterGame()
     {
         StartCoroutine(LoadScene(1));
-    }
-    public void EnterMultiplayer()
-    {
-        MultiplayerCanvas.SetActive(true);
-        MultiplayerManager.SetActive(true);
-        MenuCanvas.SetActive(false);
-        this.gameObject.SetActive(false);
-    }
-    public void EnterTutorial()
-    {
-        StartCoroutine(LoadScene(4));
     }
 
     IEnumerator LoadScene(int scene)

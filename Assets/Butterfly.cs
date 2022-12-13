@@ -13,20 +13,83 @@ public class Butterfly : MonoBehaviour
 
     int tick = 0;
 
+    [Header("Random Movement System")]
+    public float RandomMovementRange = 5;
+    public float MoveSpeed = 1f;
+    [Range(0f, 1f)] public float CurveStrength = .5f;
+
+    Vector2 lastPlace;
+    public Vector2 placeToGo;
+    Vector2 distanceGoneInLine;
+
+    bool _isResting = false;
+    bool isResting
+    {
+        get => _isResting;
+        set
+        {
+            if (!value) return;
+            _isResting = value;
+            StartCoroutine(RestTime());
+        }
+    }
+
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
+
+        ChooseNewRandomLocation(true);
     }
     private void FixedUpdate()
     {
         GoToRandomPlace();
+
+        FlipCheck();
 
         MoveUpAndDown();
     }
 
     void GoToRandomPlace()
     {
+        if (Mathf.Abs((placeToGo - rigidbody.position).magnitude) < .1f)
+        {
+            ChooseNewRandomLocation();
+        }
 
+        if (isResting) return;
+
+        Vector2 OriginalDistance = placeToGo - lastPlace;
+
+        Vector2 Movement = CurveStrength * ScaleVectorToCurve(lastPlace, placeToGo, distanceGoneInLine) + (1 - CurveStrength) * OriginalDistance.normalized;
+
+        distanceGoneInLine += OriginalDistance.normalized * Time.deltaTime;
+        rigidbody.position += Movement * Time.deltaTime;
+    }
+
+    void ChooseNewRandomLocation(bool isFromStart = false)
+    {
+        if (!isFromStart) isResting = true;
+
+        lastPlace = transform.position;
+        distanceGoneInLine = transform.position;
+        placeToGo = new(Random.Range(-RandomMovementRange, RandomMovementRange) + transform.position.x, Random.Range(-RandomMovementRange, RandomMovementRange) + transform.position.y);
+    }
+
+    Vector2 ScaleVectorToCurve(Vector2 startPos, Vector2 endPos, Vector2 placeToScale)
+    {
+        Vector2 Curve = endPos - startPos;
+
+        float progressX = ((placeToScale.x / Curve.x) - 1) * Mathf.PI / 2;
+        float progressY = ((placeToScale.x / Curve.y) - 1) * Mathf.PI / 2;
+
+        return new(Mathf.Cos(progressX), Mathf.Sin(progressY) + 1); 
+    }
+
+    IEnumerator RestTime(float time = 2f)
+    {
+        yield return new WaitForSeconds(time);
+
+        _isResting = false;
     }
 
     void MoveUpAndDown()
@@ -39,5 +102,13 @@ public class Butterfly : MonoBehaviour
         rigidbody.MovePosition(new(rigidbody.position.x, rigidbody.position.y + movement));
 
         if(tick % 8 == 0) isMovingDown = !isMovingDown;
+    }
+
+    Vector3 lastPosition = new();
+    void FlipCheck()
+    {
+        if ((transform.position - lastPosition).x * transform.localScale.x < 0) transform.localScale = new(-transform.localScale.x, transform.localScale.y);
+
+        lastPosition = transform.position;
     }
 }

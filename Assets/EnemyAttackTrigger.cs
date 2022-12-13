@@ -6,6 +6,8 @@ public class EnemyAttackTrigger : MonoBehaviour
 {
     EnemyMovement enemyMovement;
 
+    public float AttackWaitTime = .2f;
+
     private void Awake()
     {
         enemyMovement = GetComponentInParent<EnemyMovement>();
@@ -15,12 +17,25 @@ public class EnemyAttackTrigger : MonoBehaviour
     {
         if (!collision.CompareTag("Player")) return;
 
-        enemyMovement.StartAttacking();
+        StartCoroutine(Attack());
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Player")) return; 
-        
+        if (!collision.CompareTag("Player")) return;
+
+        StartCoroutine(StopAttacking());
+    }
+
+    IEnumerator Attack()
+    {
+        yield return new WaitForSeconds(AttackWaitTime);
+
+        enemyMovement.StartAttacking();
+    }
+    IEnumerator StopAttacking()
+    {
+        yield return new WaitForSeconds(AttackWaitTime);
+
         enemyMovement.StopAttacking();
     }
 }

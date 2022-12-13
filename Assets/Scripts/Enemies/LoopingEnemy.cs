@@ -23,6 +23,8 @@ public class LoopingEnemy : EnemyMovement
         }
     }
 
+    public float waypointWaitTime = 0f;
+
     protected override void Awake()
     {
         base.Awake();
@@ -47,9 +49,14 @@ public class LoopingEnemy : EnemyMovement
             else 
                 activeWaypoint++;
 
-            SetPositionToGo(waypoints[activeWaypoint]);
+            if(waypointWaitTime <= 0f)
+                SetPositionToGo(waypoints[activeWaypoint]);
+            else
+                SetPositionToGo(waypoints[activeWaypoint], waypointWaitTime);
         }
     }
+
+    public void GoToActiveWaypoint() => SetPositionToGo(waypoints[activeWaypoint]);
     void CheckForWaypointCount()
     {
 #if UNITY_EDITOR

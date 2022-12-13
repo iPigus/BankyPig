@@ -75,8 +75,6 @@ PolygonCollider2D:
     m_Paths:
     - - {x: 0.2334013, y: 0.75716877}
       - {x: -0.103904724, y: 0.64032984}
-      - {x: 0.50915337, y: 0.52503073}
-      - {x: 0.7537155, y: -0.03643799}
       - {x: 0.43959665, y: -0.59237385}
       - {x: 0.952044, y: -0.2762053}
       - {x: 1.0265708, y: 0.18181932}
@@ -155,6 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e9396a53b2718348a912b891edc11d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AttackWaitTime: 0.2
 --- !u!1 &1294075155
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,6 +380,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MovementSpeed: 1
+  goToPosition: {x: -6, y: -14}
 --- !u!114 &2530695083724928269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -417,7 +417,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.08}

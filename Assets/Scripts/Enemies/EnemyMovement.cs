@@ -11,6 +11,19 @@ public class EnemyMovement : MonoBehaviour
 
     public Vector2 goToPosition = new();
 
+    bool _isResting = false;
+    bool isResting
+    {
+        get => _isResting;
+        set
+        {
+            if (!value) return;
+            _isResting = value;
+            StartCoroutine(RestTime());
+        }
+    }
+    float restTime = 1f;
+
     protected virtual void Awake()
     {
         Rigidbody = GetComponent<Rigidbody2D>();
@@ -27,10 +40,16 @@ public class EnemyMovement : MonoBehaviour
     {
         this.goToPosition = goToPosition;
     }
+    public void SetPositionToGo(Vector2 goToPosition, float waitTime)
+    {
+        this.goToPosition = goToPosition;   
+        restTime = waitTime;
+        isResting = true;
+    }
 
     protected void MoveToSetPosition()
     {
-        if (isAnimatorAttacking) return;
+        if (isAnimatorAttacking || isResting) return;
 
         if ((goToPosition - Rigidbody.position).magnitude < 0.1f)
         {
@@ -75,5 +94,12 @@ public class EnemyMovement : MonoBehaviour
         if (_isAttacking) return;
 
         Animator.SetBool("isAttacking", false);
+    }
+
+    IEnumerator RestTime()
+    {
+        yield return new WaitForSeconds(restTime);
+
+        _isResting = false;
     }
 }

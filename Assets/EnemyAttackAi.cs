@@ -6,6 +6,11 @@ public class EnemyAttackAi : MonoBehaviour
 {
     EnemyMovement enemyMovement => GetComponentInParent<EnemyMovement>();
 
+    bool isLoopingEnemy => enemyMovement is LoopingEnemy;
+    LoopingEnemy loopingMovement => enemyMovement as LoopingEnemy;
+
+    public bool shouldGoHome = true;
+
     public enum HomeDisanceForm : int
     {
         Square,
@@ -71,7 +76,7 @@ public class EnemyAttackAi : MonoBehaviour
     }
     void StartFollowingPlayer()
     {
-        if (!isFollowingPlayer) BeforeFollowingPosition = transform.position;
+        if (!isFollowingPlayer) BeforeFollowingPosition = enemyMovement.goToPosition;
 
         isFollowingPlayer = true;
     }
@@ -135,7 +140,10 @@ public class EnemyAttackAi : MonoBehaviour
             enemyMovement.SetPositionToGo(new(transform.position.x, transform.position.y));
             yield return new WaitForSeconds(1f);
         }
-        enemyMovement.SetPositionToGo(HomePosition);
+        if (loopingMovement)
+            loopingMovement.GoToActiveWaypoint();
+        else 
+            enemyMovement.SetPositionToGo(HomePosition);
 
         yield return new WaitForSeconds(4f); // to give mobs some time before they come back at the player
         isReturningHome = false;

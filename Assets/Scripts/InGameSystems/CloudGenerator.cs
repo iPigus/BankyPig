@@ -18,6 +18,10 @@ public class CloudGenerator : MonoBehaviour
     [Range(0f, 0.3f)] public float CloudMoveMaxSpeed = 0.1f;
     [Range(0f, 0.3f)] public float CloudMoveMinSpeed = 0.09f;
 
+    [Header("Cloud Size")]
+    [Range(0f, 2f)] public float CloudMinSize = .8f;
+    [Range(0f, 2f)] public float CloudMaxSize = 1.2f;
+
     uint Tick { get; set; }  // TickRate => 50
 
     List<GameObject> Clouds = new();
@@ -43,6 +47,10 @@ public class CloudGenerator : MonoBehaviour
     void SpawnCloud(Vector2 position)
     {
         GameObject spawnedCloud = Instantiate(Cloud, position, Quaternion.identity, transform);
+
+        float cloudSize = Random.Range(CloudMinSize, CloudMaxSize);
+
+        spawnedCloud.transform.localScale = new(cloudSize, cloudSize);
 
         Clouds.Add(spawnedCloud);
         spawnedCloud.GetComponent<Rigidbody2D>().velocity = Random.Range(CloudMoveMinSpeed, CloudMoveMaxSpeed) * new Vector2(Mathf.Cos(CloudMoveDirection / 180f * Mathf.PI), Mathf.Sin(CloudMoveDirection / 180f * Mathf.PI));

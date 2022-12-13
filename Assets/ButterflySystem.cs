@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class ButterflySystem : MonoBehaviour
 {
+    public static ButterflySystem Singleton { get; private set; }
+
     public GameObject Butterfly;
 
     [Header("Butterfly Spawning")]
     [Range(0.1f, 10f)] public float ButterflyFrequency = 1f;
-    [Range(0, 2000)] public uint MaxButterflyCount = 40;
-    [Range(0, 2000)] public uint SpawnButterflyCount = 15;
+    [Range(0, 400)] public uint MaxButterflyCount = 40;
+    [Range(0, 400)] public uint SpawnButterflyCount = 15;
     [Range(0f, 100f)] public float ButterflySpawnRange = 35f;
     [Range(0f, 10000f)] public float DestroyButterflyTime = 1000f;
 
@@ -19,10 +21,11 @@ public class ButterflySystem : MonoBehaviour
 
     uint Tick { get; set; }  // TickRate => 50
 
-    List<GameObject> Butterflies = new();
+    public List<GameObject> Butterflies { get; set; } = new();
 
     private void Awake()
     {
+        Singleton = this;
         for (int i = 0; i < SpawnButterflyCount; i++)
         {
             SpawnButterfly(FindPositionToSpawnButterfly(true));
@@ -146,4 +149,6 @@ public class ButterflySystem : MonoBehaviour
         Butterflies.Remove(cloud);
         Destroy(cloud);
     }
+
+    public static void SpawnButterfly() => Singleton.SpawnButterfly(Singleton.FindPositionToSpawnButterfly());
 }

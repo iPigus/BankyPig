@@ -18,9 +18,14 @@ public class Butterfly : MonoBehaviour
     public float MoveSpeed = 1f;
     [Range(0f, 1f)] public float CurveStrength = .5f;
 
+    [Header("Max Distance")]
+    [Range(0f, 100f)]public float MaxButterflyDistance = 60;
+
     Vector2 lastPlace;
     public Vector2 placeToGo;
     Vector2 distanceGoneInLine;
+
+    Animator animator;
 
     bool _isResting = false;
     bool isResting
@@ -37,8 +42,13 @@ public class Butterfly : MonoBehaviour
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
 
         ChooseNewRandomLocation(true);
+    }
+    private void Start()
+    {
+        animator.enabled = (transform.position - PlayerHealth.Singleton.transform.position).magnitude < 15f;
     }
     private void FixedUpdate()
     {
@@ -47,6 +57,8 @@ public class Butterfly : MonoBehaviour
         FlipCheck();
 
         MoveUpAndDown();
+
+        TooFarCheck();
     }
 
     void GoToRandomPlace()
@@ -110,5 +122,27 @@ public class Butterfly : MonoBehaviour
         if ((transform.position - lastPosition).x * transform.localScale.x < 0) transform.localScale = new(-transform.localScale.x, transform.localScale.y);
 
         lastPosition = transform.position;
+    }
+
+    void TooFarCheck()
+    {
+        if (tick % 2 == 0) return;
+
+        if (Mathf.Abs(transform.position.x) > MaxButterflyDistance || Mathf.Abs(transform.position.y) > MaxButterflyDistance)
+        {
+            ButterflySystem.SpawnButterfly();
+
+            ButterflySystem.Singleton.Butterflies.Remove(gameObject);
+            Destroy(this.gameObject);
+        }
+    }
+
+    private void OnBecameInvisible()
+    {
+        animator.enabled = false; 
+    }
+    private void OnBecameVisible()
+    {
+        animator.enabled = true; 
     }
 }

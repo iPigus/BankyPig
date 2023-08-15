@@ -25,6 +25,11 @@ public class Statlider : MonoBehaviour
         statbarHeight = StatbarFill.rectTransform.sizeDelta.y;
     }
 
+    private void Start()
+    {
+        UpdateProgress();
+    }
+
     private void OnGUI()
     {
         DefaultReverse();

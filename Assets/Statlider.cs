@@ -25,6 +25,11 @@ public class Statlider : MonoBehaviour
         statbarHeight = StatbarFill.rectTransform.sizeDelta.y;
     }
 
+    private void OnGUI()
+    {
+        DefaultReverse();
+    }
+
     void UpdateProgress()
     {
         Progress = Mathf.Max(Progress, 0);
@@ -69,4 +74,20 @@ public class Statlider : MonoBehaviour
     }
 
     public void SetMax() => Set(Max);
+
+    void DefaultReverse()
+    {
+        bool isReversed = false;
+
+        Transform actualTransform = this.transform;
+
+        while (actualTransform.parent)
+        {
+            if (actualTransform.localScale.x < 0) isReversed = !isReversed;
+
+            actualTransform = actualTransform.parent;
+        }
+
+        if (isReversed) transform.localScale = new(-transform.localScale.x, transform.localScale.y);
+    }
 }

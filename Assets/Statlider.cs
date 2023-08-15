@@ -24,10 +24,7 @@ public class Statlider : MonoBehaviour
         statbarWidth = transform.GetChild(0).GetComponent<RectTransform>().sizeDelta.x;
         statbarHeight = StatbarFill.rectTransform.sizeDelta.y;
     }
-    private void Update()
-    {
-        UpdateProgress();
-    }
+
     void UpdateProgress()
     {
         Progress = Mathf.Max(Progress, 0);
@@ -47,9 +44,28 @@ public class Statlider : MonoBehaviour
         Text.gameObject.SetActive(ShowProgress); if (ShowProgress) Text.text = Progress + " / " + Max;
     }
 
+    public void IncreaseProgress(int factor)
+    {
+        Progress += factor; 
+        UpdateProgress();
+    }
+    public void DecreaseProgress(int factor)
+    {
+        Progress -= factor;
+        UpdateProgress();
+    }
+
     public void Set(int Progress)
     {
-        
+        this.Progress = Progress; 
+        UpdateProgress();        
+    }
+
+    public void Set(int Progress, int Max)
+    {
+        this.Progress = Progress;
+        this.Max = Max;
+        UpdateProgress();
     }
 
     public void SetMax() => Set(Max);

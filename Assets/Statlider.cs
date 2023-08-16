@@ -12,12 +12,22 @@ public class Statlider : MonoBehaviour
     [SerializeField] int Progress = 0;
     public bool ShowProgress = true;
     public bool ShowReadyText = true;
+    public bool isPlayer = true;
 
     float statbarWidth;
     float statbarHeight;
 
     private void Awake()
     {
+        if (isPlayer)
+        {
+            TurnBasedManager.Singleton.playerSliders.Add(this);
+        }
+        else
+        {
+            TurnBasedManager.Singleton.enemySliders.Add(this);
+        }
+
         Statbar = GetComponent<Image>(); 
         StatbarFill = transform.GetChild(1).GetComponent<Image>();
         Text = transform.GetChild(2).GetComponent<TextMeshProUGUI>();

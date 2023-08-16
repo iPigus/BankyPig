@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class TurnBasedManager : MonoBehaviour
 {
     public static TurnBasedManager Singleton;
 
-    public List<Statlider> playerSliders = new();    
-    public List<Statlider> enemySliders = new();
+    public static List<Statlider> playerSliders = new();
+    public static List<Statlider> enemySliders = new();
+    public static TextMeshProUGUI playerTurnPoints { get; set; }
+    public static TextMeshProUGUI enemyTurnPoints { get; set; }
 
     TurnPlayer player; TurnEnemy enemy;
 
@@ -30,8 +33,11 @@ public class TurnBasedManager : MonoBehaviour
         Statlider enemyHealth = enemySliders.Where(x => x.name.ToLower().Contains("health")).First(); enemySliders.Remove(enemyHealth);
         Statlider enemyEnergy = enemySliders.First(); enemySliders.Remove(playerEnergy); if (enemySliders.Count() > 1) Debug.LogError("Too many player sliders!");
 
-        player = new(0, 5, 5, 5, 5, 2, playerHealth, playerEnergy);
-        enemy = new(0, 7, 7, 4, 4, 2, enemyHealth, enemyEnergy);
+        player = new(0, 5, 5, 5, 0, 2, playerHealth, playerEnergy, playerTurnPoints);
+        enemy = new(0, 7, 7, 4, 0, 2, enemyHealth, enemyEnergy);
+
+        playerSliders = new();
+        enemySliders = new();
     }
 
     public static void PlayerAttack(int damage) => Singleton.enemy.TakeDamage(damage);
@@ -50,7 +56,8 @@ public class TurnBasedManager : MonoBehaviour
 
 class TurnPlayer
 {
-    public TurnPlayer(int shield, int maxHealth, int health, int maxEnergy, int energy, int movePoints, Statlider healthSlider, Statlider energySlider)
+    public TurnPlayer(int shield, int maxHealth, int health, int maxEnergy, int energy, int movePoints, Statlider healthSlider, Statlider energySlider, 
+        TextMeshProUGUI movepointsText)
     {
         this.shield = shield;
         this.maxHealth = maxHealth;
@@ -60,10 +67,11 @@ class TurnPlayer
         this.movePoints = movePoints;
         this.healthSlider = healthSlider;
         this.energySlider = energySlider;
+        this.movePointsText = movepointsText;
 
         UpdateSliders();
     }
-    Statlider healthSlider; Statlider energySlider;
+    Statlider healthSlider; Statlider energySlider; TextMeshProUGUI movePointsText;
     public int shield { get; private set; } = 0;
     public int maxHealth { get; private set; }  
     public int health { get; private set; }
@@ -92,7 +100,12 @@ class TurnPlayer
         this.shield += shield;
         UpdateSliders();
     }
-    public void UseMovePoints(int movePoints) => this.movePoints -= movePoints;
+    public void UseMovePoints(int movePoints)
+    {
+        this.movePoints -= movePoints;
+        movePointsText.text = "Move Points " + this.movePoints;
+        Debug.LogError(this.movePoints);
+    }
 }
 
 class TurnEnemy

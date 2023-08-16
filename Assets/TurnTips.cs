@@ -18,6 +18,7 @@ public class TurnTips : MonoBehaviour
 
     private void OnDisable()
     {
+        if (!Singleton) return;
         Singleton.transform.GetChild(0).gameObject.SetActive(false);
     }
 }

@@ -21,11 +21,11 @@ public class Statlider : MonoBehaviour
     {
         if (isPlayer)
         {
-            TurnBasedManager.Singleton.playerSliders.Add(this);
+            TurnBasedManager.playerSliders.Add(this);
         }
         else
         {
-            TurnBasedManager.Singleton.enemySliders.Add(this);
+            TurnBasedManager.enemySliders.Add(this);
         }
 
         Statbar = GetComponent<Image>(); 

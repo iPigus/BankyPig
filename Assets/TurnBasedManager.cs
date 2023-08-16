@@ -31,7 +31,7 @@ public class TurnBasedManager : MonoBehaviour
         Statlider enemyEnergy = enemySliders.First(); enemySliders.Remove(playerEnergy); if (enemySliders.Count() > 1) Debug.LogError("Too many player sliders!");
 
         player = new(0, 5, 5, 5, 5, 2, playerHealth, playerEnergy);
-        enemy = new(0, 3, 3, 4, 4, 2, enemyHealth, enemyEnergy);
+        enemy = new(0, 7, 7, 4, 4, 2, enemyHealth, enemyEnergy);
     }
 
     public static void PlayerAttack(int damage) => Singleton.enemy.TakeDamage(damage);

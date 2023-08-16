@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class TurnMoveUI : MonoBehaviour
 {
     [Header("Basic Info")]
+    public string moveName = string.Empty;
     public int turnPoints = 1;
     public bool isReusable = false; 
 
@@ -20,9 +22,18 @@ public class TurnMoveUI : MonoBehaviour
     public bool isHeal = false;
     public Vector2Int Heal = new();
 
+    [Header("Serielized Fields")]
+    [SerializeField] TextMeshProUGUI nameText;
+    [SerializeField] TextMeshProUGUI reusableText;
+    [SerializeField] TextMeshProUGUI turnPointsText;
+
+    [SerializeField] GameObject AttackStat;
+    [SerializeField] GameObject HealStat;
+    [SerializeField] GameObject ShieldStat;
+
     private void Awake()
     {
-        
+        InfoUpdate();
     }
 
     public void Click()
@@ -64,5 +75,11 @@ public class TurnMoveUI : MonoBehaviour
     public void Enable()
     {
 
+    }
+
+
+    void InfoUpdate()
+    {
+        
     }
 }

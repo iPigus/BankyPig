@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TurnMoveUI : MonoBehaviour
 {
@@ -31,8 +33,14 @@ public class TurnMoveUI : MonoBehaviour
     [SerializeField] GameObject HealStat;
     [SerializeField] GameObject ShieldStat;
 
+    HorizontalLayoutGroup layoutGroup;
+    RectTransform rectTransform;
+
     private void Awake()
     {
+        layoutGroup = transform.parent.GetComponent<HorizontalLayoutGroup>();
+        rectTransform = GetComponent<RectTransform>();
+
         InfoUpdate();
     }
 
@@ -62,11 +70,14 @@ public class TurnMoveUI : MonoBehaviour
         }
 
         TurnBasedManager.UseTurnPoints(turnPoints);
+
+        if (isReusable) ReShowAnimation();
+        else Hide();
     }
 
     public void Hide()
     {
-
+        rectTransform.anchoredPosition = new(rectTransform.anchoredPosition.x, -420);
     }
     public void Disable()
     {
@@ -74,12 +85,47 @@ public class TurnMoveUI : MonoBehaviour
     }
     public void Enable()
     {
+        InfoUpdate();
+
 
     }
+
+    public async void ReShowAnimation()
+    {
+        if (layoutGroup.enabled) layoutGroup.enabled = false;
+
+        Vector2 startPos = new(rectTransform.anchoredPosition.x, -420); Vector2 endPos = new(rectTransform.anchoredPosition.x, -120);
+        const float animationTime = .35f; float timeElapsed = 0f;
+
+        while (true)
+        {
+            float dialation = Mathf.Pow(timeElapsed / animationTime, .8f);
+            rectTransform.anchoredPosition = Vector2.Lerp(startPos, endPos, dialation);
+            
+            await Task.Yield();
+            timeElapsed += Time.deltaTime;
+            if (timeElapsed > animationTime) break;
+        }
+
+        rectTransform.anchoredPosition = endPos;
+    }
+
 
 
     void InfoUpdate()
     {
-        
+        nameText.text = moveName;
+        reusableText.gameObject.SetActive(isReusable);
+        turnPointsText.gameObject.SetActive(turnPoints != 1);
+        turnPointsText.text = turnPoints.ToString();
+
+        AttackStat.gameObject.SetActive(isAttack); if (isAttack) AttackStat.GetComponentInChildren<TextMeshProUGUI>().text = Attack.x + " - " + Attack.y;
+        ShieldStat.gameObject.SetActive(isShield); if (isShield) AttackStat.GetComponentInChildren<TextMeshProUGUI>().text = Attack.x + " - " + Attack.y;
+        HealStat.gameObject.SetActive(isHeal); if (isHeal) AttackStat.GetComponentInChildren<TextMeshProUGUI>().text = Attack.x + " - " + Attack.y;
+
+        if (isHeal && isShield && isAttack)
+        {
+            Debug.LogError("To implement!");
+        }
     }
 }

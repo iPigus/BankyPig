@@ -6,6 +6,7 @@ using UnityEngine;
 public class FlashTextMeshPro : MonoBehaviour
 {
     TextMeshProUGUI text;
+    [SerializeField] float flashTime = .66f;
     private void Awake()
     {
         text = GetComponent<TextMeshProUGUI>();
@@ -17,7 +18,7 @@ public class FlashTextMeshPro : MonoBehaviour
     {
         while(true)
         {
-            yield return new WaitForSecondsRealtime(0.66f);
+            yield return new WaitForSecondsRealtime(flashTime);
 
             text.enabled = !text.enabled;
         }

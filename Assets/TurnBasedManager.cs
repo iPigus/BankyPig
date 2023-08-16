@@ -25,35 +25,26 @@ public class TurnBasedManager : MonoBehaviour
     void InitializeGame()
     {
         Statlider playerHealth = playerSliders.Where(x => x.name.ToLower().Contains("health")).First(); playerSliders.Remove(playerHealth);
-        Statlider playerEnergy = playerSliders.First(); playerSliders.Remove(playerEnergy); if (playerSliders.Count() > 0) Debug.LogError("Too many player sliders!");
+        Statlider playerEnergy = playerSliders.First(); playerSliders.Remove(playerEnergy); if (playerSliders.Count() > 1) Debug.LogError("Too many player sliders!");
 
         Statlider enemyHealth = enemySliders.Where(x => x.name.ToLower().Contains("health")).First(); enemySliders.Remove(enemyHealth);
-        Statlider enemyEnergy = enemySliders.First(); enemySliders.Remove(playerEnergy); if (enemySliders.Count() > 0) Debug.LogError("Too many player sliders!");
+        Statlider enemyEnergy = enemySliders.First(); enemySliders.Remove(playerEnergy); if (enemySliders.Count() > 1) Debug.LogError("Too many player sliders!");
 
         player = new(0, 5, 5, 5, 5, 2, playerHealth, playerEnergy);
         enemy = new(0, 3, 3, 4, 4, 2, enemyHealth, enemyEnergy);
     }
 
-    public static bool PlayerAttack(int damage, int turnPoints)
+    public static void PlayerAttack(int damage) => Singleton.enemy.TakeDamage(damage);
+    public static void PlayerShield(int shield) => Singleton.player.AddShield(shield);
+    public static void PlayerHeal(int heal) => Singleton.player.AddHealth(heal);
+    public static void UseTurnPoints(int turnPoints) => Singleton.player.UseMovePoints(turnPoints);
+
+    public static bool canMakeMove(int turnPoints)
     {
-        if (Singleton.player.movePoints < turnPoints) return false;
-        Singleton.player.UseMovePoints(turnPoints);
-        Singleton.enemy.TakeDamage(damage);
-        return true;
-    }
-    public static bool PlayerShield(int shield, int turnPoints) 
-    {
-        if (Singleton.player.movePoints < turnPoints) return false;
-        Singleton.player.UseMovePoints(turnPoints);
-        Singleton.player.AddShield(shield);
-        return true;
-    }
-    public static bool PlayerHeal(int heal, int turnPoints)
-    {
-        if (Singleton.player.movePoints < turnPoints) return false;
-        Singleton.player.UseMovePoints(turnPoints);
-        Singleton.player.AddHealth(heal);
-        return true;
+        if (!Singleton) { Debug.LogError("No Singleton!"); return false; }
+        if (Singleton.player == null) { Debug.LogError("Player is null!"); return false; }
+
+        return Singleton.player.movePoints >= turnPoints;
     }
 }
 

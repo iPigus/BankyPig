@@ -33,6 +33,28 @@ public class TurnBasedManager : MonoBehaviour
         player = new(0, 5, 5, 5, 5, 2, playerHealth, playerEnergy);
         enemy = new(0, 3, 3, 4, 4, 2, enemyHealth, enemyEnergy);
     }
+
+    public static bool PlayerAttack(int damage, int turnPoints)
+    {
+        if (Singleton.player.movePoints < turnPoints) return false;
+        Singleton.player.UseMovePoints(turnPoints);
+        Singleton.enemy.TakeDamage(damage);
+        return true;
+    }
+    public static bool PlayerShield(int shield, int turnPoints) 
+    {
+        if (Singleton.player.movePoints < turnPoints) return false;
+        Singleton.player.UseMovePoints(turnPoints);
+        Singleton.player.AddShield(shield);
+        return true;
+    }
+    public static bool PlayerHeal(int heal, int turnPoints)
+    {
+        if (Singleton.player.movePoints < turnPoints) return false;
+        Singleton.player.UseMovePoints(turnPoints);
+        Singleton.player.AddHealth(heal);
+        return true;
+    }
 }
 
 class TurnPlayer
@@ -50,22 +72,36 @@ class TurnPlayer
 
         UpdateSliders();
     }
-
     Statlider healthSlider; Statlider energySlider;
     public int shield { get; private set; } = 0;
     public int maxHealth { get; private set; }  
     public int health { get; private set; }
     public int maxEnergy { get; private set; }
     public int energy { get; private set; }
-
     public int movePoints { get; private set; }
+
     void UpdateSliders()
     {
         healthSlider.Set(health, maxHealth);
         energySlider.Set(energy, maxEnergy);
     }
-    
 
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        UpdateSliders();
+    }
+    public void AddHealth(int heal)
+    {
+        health += heal;
+        UpdateSliders();
+    }
+    public void AddShield(int shield)
+    {
+        this.shield += shield;
+        UpdateSliders();
+    }
+    public void UseMovePoints(int movePoints) => this.movePoints -= movePoints;
 }
 
 class TurnEnemy
@@ -98,6 +134,12 @@ class TurnEnemy
         energySlider.Set(energy, maxEnergy);
     }
 
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        UpdateSliders();
+    }
+    public void UseMovePoints(int movePoints) => this.movePoints -= movePoints;
 }
 
 //class TurnBoss : TurnEnemy

@@ -104,7 +104,6 @@ class TurnPlayer
     {
         this.movePoints -= movePoints;
         movePointsText.text = "Move Points " + this.movePoints;
-        Debug.LogError(this.movePoints);
     }
 }
 

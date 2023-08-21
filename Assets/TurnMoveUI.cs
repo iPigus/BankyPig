@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class TurnMoveUI : MonoBehaviour
 {
+    #region Serielized Data
     [Header("Basic Info")]
     public string moveName = string.Empty;
     public int turnPoints = 1;
@@ -32,9 +33,12 @@ public class TurnMoveUI : MonoBehaviour
     [SerializeField] GameObject AttackStat;
     [SerializeField] GameObject HealStat;
     [SerializeField] GameObject ShieldStat;
+    #endregion
 
     HorizontalLayoutGroup layoutGroup;
     RectTransform rectTransform;
+
+    public bool canBeClicked { get; private set; } = true;
 
     private void Awake()
     {
@@ -46,7 +50,7 @@ public class TurnMoveUI : MonoBehaviour
 
     public void Click()
     {
-        if (!TurnBasedManager.canMakeMove(turnPoints)) return;
+        if (!TurnBasedManager.canMakeMove(turnPoints) || !canBeClicked) return;
         if (!isAttack && !isShield && !isHeal) { Debug.LogError("It ain't doing nothing"); return; }
         System.Random random = new();
 
@@ -77,7 +81,8 @@ public class TurnMoveUI : MonoBehaviour
 
     public void Hide()
     {
-        rectTransform.anchoredPosition = new(rectTransform.anchoredPosition.x, -420);
+        canBeClicked = false;
+        HideAnimation();
     }
     public void Disable()
     {
@@ -86,13 +91,15 @@ public class TurnMoveUI : MonoBehaviour
     public void Enable()
     {
         InfoUpdate();
+        canBeClicked = true;
 
 
     }
 
+    #region Animations
     public async void ReShowAnimation()
     {
-        if (layoutGroup.enabled) layoutGroup.enabled = false;
+        if (layoutGroup.enabled) layoutGroup.enabled = false; canBeClicked = false;
 
         Vector2 startPos = new(rectTransform.anchoredPosition.x, -420); Vector2 endPos = new(rectTransform.anchoredPosition.x, -120);
         const float animationTime = .35f; float timeElapsed = 0f;
@@ -108,9 +115,29 @@ public class TurnMoveUI : MonoBehaviour
         }
 
         rectTransform.anchoredPosition = endPos;
+        canBeClicked = true;
     }
 
+    public async void HideAnimation()
+    {
+        if (layoutGroup.enabled) layoutGroup.enabled = false;
 
+        Vector2 startPos = new(rectTransform.anchoredPosition.x, -120); Vector2 endPos = new(rectTransform.anchoredPosition.x, -420);
+        const float hideTime = .2f; float timeElapsed = 0f;
+
+        while (true)
+        {
+            float dialation = Mathf.Pow(timeElapsed / hideTime, .8f);
+            rectTransform.anchoredPosition = Vector2.Lerp(startPos, endPos, dialation);
+
+            await Task.Yield();
+            timeElapsed += Time.deltaTime;
+            if (timeElapsed > hideTime) break;
+        }
+
+        rectTransform.anchoredPosition = endPos;
+    }
+    #endregion
 
     void InfoUpdate()
     {
